@@ -1,0 +1,52 @@
+<form action="/employee/entry" method="post">
+        <h3>Employee Entry</h3>
+        <table>         
+            <tr>
+                <td>
+                    <label>Id</label>
+                    <input type="number" name="Id" placeholder="Type your code" required>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>First Name</label>
+                    <input type="text" name="FirstName" placeholder="Type your name" required>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Last Name</label>
+                    <input type="text" name="LastName" placeholder="Type your email" required>
+                </td>
+            </tr>
+
+        <tr>
+            <td>
+                <label>Street</label>
+                <input type="text" name="HomeAddress.Street" placeholder="Type your email" required>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>Country</label>
+                <input type="text" name="HomeAddress.CountryCode" placeholder="Type your email" required>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>Postal Code </label>
+                <input type="text" name="HomeAddress.PostalCode" placeholder="Type Postal Code " required>
+            </td>
+        </tr>
+
+            <tr>
+                <td>
+                    <button type="submit">Entry</button>
+                    <button type="reset">Cancel</button>
+                </td>
+            </tr>
+
+        </table>
+    </form>

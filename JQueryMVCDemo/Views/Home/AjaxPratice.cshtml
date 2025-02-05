@@ -1,0 +1,18 @@
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<body>
+    <form>
+    <p id="whatTime"></p>
+    <button type="button" id="btnClickMe" class="btn btn-success">ClickMe</button>
+    </form>
+    <script>
+        $('#btnClickMe').on('click',function (){
+           
+           
+           var url='/home/TellMeNow';     
+           $.get(url,null,function(response){
+            $('#whatTime').html(response);
+           });
+         
+        });
+    </script>
+</body>

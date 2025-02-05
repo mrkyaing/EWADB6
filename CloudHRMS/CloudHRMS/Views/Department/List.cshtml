@@ -1,0 +1,43 @@
+﻿@model IList<CloudHRMS.Models.ViewModels.DepartmentViewModel>
+
+<h1>
+    Department List Information
+</h1>
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Msg"]
+    </div>
+}
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">#</th> <!-- sr no-->
+            <th scope="col">Code</th>
+            <th scope="col">Description</th>
+            <th scope="col">ExtensionPhone</th>
+            @if(User.IsInRole("HR")){
+                <th scope="col">Actions</th>
+            }
+
+        </tr>
+    </thead>
+    <tbody>
+        <!-- for record all-->
+        @foreach (var item in Model) // Model is build in model
+        {
+            <tr>
+                <th scope="row">@(Model.IndexOf(item) + 1)</th>
+                <td>@item.Code</td>
+                <td>@item.Description</td>
+                <td>@item.ExtensionPhone</td>
+               @if(User.IsInRole("HR")){
+                    <td>
+                        <a href="/department/edit?id=@item.Id" role="button" class="btn btn-success"> Edit </a><!--/department/edit" --><!--/department/delete" -->
+                        <a href="/department/deletebyId?id=@item.Id" role="button" class="btn btn-danger" onclick="return confirm('Are you to delete this record')" ;> Delete </a>
+                    </td>
+               }
+            </tr>
+        }
+    </tbody>
+</table>

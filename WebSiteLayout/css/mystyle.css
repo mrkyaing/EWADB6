@@ -1,0 +1,39 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+header{
+    text-align: center;
+    background-color: darkgreen;
+    font-size: 15px;
+    color: black;
+    padding: 10px;
+}
+nav{
+    float: left;
+    width: 10%;
+    background-color: darkgreen;
+    padding: 10px;
+    height: 850px;
+}
+ul li{
+    list-style: none;
+}
+article{
+    float: right;
+    width: 90%;
+    padding: 10px;
+}
+footer{
+    text-align: center;
+    padding: 10px;
+    margin-top: auto;
+    font-size: 15px;
+    color: black;
+    background-color: darkgreen;
+}

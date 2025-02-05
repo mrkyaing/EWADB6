@@ -1,0 +1,32 @@
+﻿@if (ViewBag.Msg != null)
+{
+    <div class="alert alert-secondary" role="alert">
+        @ViewBag.Msg
+    </div>
+}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header text-center">
+            <h4>Position Entry</h4>
+        </div>
+        <div class="card-body">
+            <form action="/position/entry" method="post">
+                <div class="mb-3">
+                    <label for="positionCode" class="form-label">Code</label>
+                    <input type="text" class="form-control" placeholder="Type your Code" name="Code" required>
+                </div>
+                <div class="mb-3">
+                    <label for="positionDescription" class="form-label">Description</label>
+                    <input type="text" class="form-control" placeholder="Type the description" name="Description" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="positionLevel" class="form-label">Level</label>
+                    <input type="number" class="form-control" placeholder="Type the Level" name="Level" required>
+                </div>
+                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="reset" class="btn btn-primary">Cancel</button>
+            </form>
+        </div>
+    </div>
+</div>

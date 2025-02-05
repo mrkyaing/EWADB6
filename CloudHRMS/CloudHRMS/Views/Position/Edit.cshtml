@@ -1,0 +1,34 @@
+﻿@model CloudHRMS.Models.ViewModels.PositionViewModel
+@if (ViewBag.Msg != null)
+{
+    <div class="alert alert-secondary" role="alert">
+        @ViewBag.Msg
+    </div>
+}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header text-center">
+            <h4>Position Edition</h4>
+        </div>
+        <div class="card-body">
+            <form action="/position/update" method="post">
+                <div class="mb-3">
+                    <input type="hidden" value="@Model.Id" name="Id">
+                    <label for="positionCode" class="form-label">Code</label>
+                    <input type="text" class="form-control" placeholder="Type your Code" name="Code" value="@Model.Code" required readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="positionDescription" class="form-label">Description</label>
+                    <input type="text" class="form-control" placeholder="Type the description" name="Description" value="@Model.Description" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="positionLevel" class="form-label">Level</label>
+                    <input type="number" class="form-control" placeholder="Type the Level" name="Level" value="@Model.Level" required>
+                </div>
+                <button type="submit" class="btn btn-warning">Update</button>
+                <a href="/position/list" class="btn btn-info">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

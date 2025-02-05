@@ -1,0 +1,45 @@
+﻿@model CloudHRMS.Models.ViewModels.DepartmentViewModel // <!-- ******** -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h2 class="text-center">Department Form</h2>
+
+        @if (ViewBag.Msg != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @ViewBag.Msg
+            </div>
+        }
+        <form action="/department/update" method="post">
+            <!--/department/update" -->
+            <div class="form-group">
+                <input type="hidden" name="Id" value="@Model.Id"><!-- for update purpose the data from ui to controller-->
+                <label for="code">Department Code</label>
+                <input type="text" class="form-control" id="code" name="Code" placeholder="Enter Employee Department Code" value="@Model.Code" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Department Description</label>
+                <textarea class="form-control" id="description" name="Description" rows="3" placeholder="Enter Employee Department Description">@Model.Description</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="extensionPhone">Extension Phone</label>
+                <input type="text" class="form-control" id="extensionPhone" name="ExtensionPhone" placeholder="Enter Employee Extension Phone" value="@Model.ExtensionPhone">
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="border-color: #00008B; background-color: #00008B;">Update</button>
+            <a href="/department/list" role="button" class="btn btn-primary"> Cancel </a>
+        </form>
+    </div>
+</body>
+</html>

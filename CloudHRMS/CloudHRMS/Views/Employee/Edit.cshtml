@@ -1,0 +1,102 @@
+﻿@model CloudHRMS.Models.ViewModels.EmployeeViewModel
+@if (ViewBag.Msg != null)
+{
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Msg
+    </div>
+}
+<form action="/employee/update" method="post">
+    <div class="mb-3">
+        <!--for update purpose to send the data from ui to controller-->
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <label for="employeeCode" class="form-label">Employee Code</label>
+        <input type="text" class="form-control" name="Code" placeholder="type your employee code" value="@Model.Code"
+            readonly required>
+    </div>
+    <div class="mb-3">
+        <label for="employeeName" class="form-label">Employee Name</label>
+        <input type="text" class="form-control" placeholder="type your employee name" name="Name" value="@Model.Name"
+            required>
+    </div>
+    <div class="mb-3">
+        <label for="employeeEmail" class="form-label">Employee Email</label>
+        <input type="email" class="form-control" placeholder="type your employee email" name="Email"
+            value="@Model.Email" readonly required>
+    </div>
+    <div class="mb-3">
+        <label for="employeeGender" class="form-label">Gender</label>
+        <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" value="f" checked name="Gender" @(Model.Gender
+                == 'f' ? "checked" : null)>
+            <label for="genderFemale" class="form-check-label">Female</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" value="m" name="Gender" @(Model.Gender == 'm' ? "checked" :
+                null)>
+            <label for="genderMale" class="form-check-label">Male</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" value="o" name="Gender" @(Model.Gender == 'o' ? "checked" :
+                null)>
+            <label for="genderOther" class="form-check-label">Other</label>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="employeeDOB" class="form-label">Employee DOB</label>
+        <input type="date" class="form-control" placeholder="select your employee DOB"
+            max="@DateTime.Now.ToString("yyyy-MM-dd")" name="DOB" value="@Model.DOB.ToString("yyyy-MM-dd")" required>
+    </div>
+    <div class="mb-3">
+        <label for="employeeDepartment" class="form-label">Department</label>     
+        <select name="DepartmentId" class="form-select">
+            @foreach(var d in @Model.DepartmentViewModels){
+                if(@d.Id==@Model.DepartmentId){
+                    <option value="@d.Id" selected>@d.Code</option>
+                }
+               else{
+                <option value="@d.Id">@d.Code</option>
+               }
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="employeePosition" class="form-label">Position</label>
+        <select name="PositionId" class="form-select">
+            @foreach(var p in @Model.PositionViewModels){
+               if(@p.Id==@Model.PositionId){
+                    <option value="@p.Id" selected>@p.Code</option>
+                }
+               else{
+                <option value="@p.Id">@p.Code</option>
+               }
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="employeeDOE" class="form-label">Employee DOE</label>
+        <input type="date" class="form-control" placeholder="select your employee DOE" name="DOE"
+            value="@Model.DOE.ToString("yyyy-MM-dd")" required>
+    </div>
+    <div class="mb-3">
+        <label for="employeeDOR" class="form-label">Employee DOR</label>
+        <input type="date" class="form-control" name="DOR" value="@Model.DOR?.ToString("yyyy-MM-dd")">
+    </div>
+
+    <div class="mb-3">
+        <label for="employeeBasicSalary" class="form-label">Basic Salary</label>
+        <input type="number" class="form-control" placeholder="type your employee basic salary" name="BasicSalary"
+            value="@Model.BasicSalary" required>
+    </div>
+    <div class="mb-3">
+        <label for="employeePhone" class="form-label">Phone</label>
+        <input type="text" class="form-control" placeholder="type your employee phone" name="Phone" value="@Model.Phone"
+            required>
+    </div>
+    <div class="form-floating">
+        <textarea class="form-control" placeholder="type your address" style="height: 100px" name="Address"
+            required>@Model.Address</textarea>
+        <label for="employeeAddress">Address</label>
+    </div>
+    <button type="submit" class="btn btn-success">Update</button>
+    <a href="/employee/list" role="button" class="btn btn-primary">Cancel</a>
+</form>

@@ -1,0 +1,42 @@
+﻿<center>
+    <h1>Currency Convertor To MMK (v1)</h1>
+    <form action="/convertor/convertorv1" method="post">
+        <table>
+            <tr>
+                <td>
+                    Choose Currency :
+                </td>
+                <td>
+                    <select name="fromCurrency">
+                        <option value="usd">USD</option>
+                        <option value="sdg">SDG</option>
+                        <option value="baht">BAHT</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Amount:
+                </td>
+                <td>
+                    <input type="number" name="inputAmount" required step="0.0001" placeholder="Type your input amount" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Result (MMK)
+                </td>
+                <td>
+                    <input type="text" value="@ViewBag.CalculatedResult" readonly />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <button type="submit">Convert</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</center>

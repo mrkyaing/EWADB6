@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JQuery Demo</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+<body>
+    <button id="btnHide">Hide</button>
+    <button id="btnShow">Show</button>
+    <div id="note">
+        This is a Div.
+    </div>
+    <script>      
+        $("#btnHide").on('click',function (){
+            $("#note").hide('slow');
+        });
+
+        $("#btnShow").on('click',function (){
+            $("#note").show('slow');
+            $("#note").css('background-color','blue');
+        });
+    </script>
+</body>
+</html>

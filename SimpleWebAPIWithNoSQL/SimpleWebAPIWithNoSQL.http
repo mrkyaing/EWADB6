@@ -1,0 +1,6 @@
+@SimpleWebAPIWithNoSQL_HostAddress = http://localhost:5278
+
+GET {{SimpleWebAPIWithNoSQL_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

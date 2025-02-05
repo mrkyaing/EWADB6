@@ -1,0 +1,64 @@
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<form>
+    <div class="mb-3">
+        <label class="form-label">Order Id</label>
+        <input type="number" class="form-control" id="txtOrderId" required placeholder="Type Order Id">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Unit Price</label>
+        <input type="number" class="form-control" id="txtUnitPrice" required placeholder="Type Unit Price">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Quantity</label>
+        <input type="number" class="form-control" id="txtQuantity" required placeholder="Type Quantity">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Result</label>
+        <input type="number" class="form-control" id="txtResult" readonly>
+    </div>
+    <button type="button" class="btn btn-primary" id="btnMakeOrder">Make Order</button>
+    <button type="button" class="btn btn-primary" id="btnMakeOrder2">Make Order 2</button>
+    <script>
+        $('#btnMakeOrder').on('click', function () {
+            var url = '/home/MakeOrder';
+            var o = $('#txtOrderId').val();
+            var p = $('#txtUnitPrice').val()
+            var q = $('#txtQuantity').val()
+            $.ajax({
+                    type: 'POST',
+                    dataType: 'JSON',
+                    url: url,
+                    data: { orderId: o, unitPrice: p, quantity: q },
+                    success: function (res) {
+                        console.info('Hello');
+                        $('#txtResult').val(res);
+                    },
+                    error: function (err) {
+                        alert('error while processing the request');
+                    }
+                });
+        });
+
+
+         $('#btnMakeOrder2').on('click', function () {
+            var url = '/home/MakeOrder2';
+            var o2={};  
+            o2.OrderId = $('#txtOrderId').val()
+            o2.UnitPrice  = $('#txtUnitPrice').val()
+            o2.Quantity  = $('#txtQuantity').val()
+
+            $.ajax({
+                    type: 'POST',
+                    dataType: 'JSON',
+                    url: url,
+                    data:o2 ,
+                    success: function (res) {
+                        $('#txtResult').val(res);
+                    },
+                    error: function (err) {
+                        alert('error while processing the request');
+                    }
+                });
+        });
+    </script>
+</form>

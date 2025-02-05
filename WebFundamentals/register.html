@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Register</title>
+    <link rel="stylesheet" href="css/form.css">
+    <script>
+        function postData() {
+            var code = document.getElementById("txtCode").value;
+            var email = document.getElementById("txtEmail").value;
+            var batchName = document.getElementById("selBatchName").value;
+            alert(`Code:${code},Email:${email},Batch:${batchName}`)//ES6 JS style
+        }
+    </script>
+</head>
+
+<body>
+    <form>
+        <h3>Student Entry</h3>
+        <table>
+            <tr>
+                <td>
+                    <label>Code</label>
+                    <input type="text" id="txtCode" placeholder="Type your code" required>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Name</label>
+                    <input type="text" id="txtName" placeholder="Type your name" required>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Email</label>
+                    <input type="email" id="txtEmail" placeholder="Type your email" required>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Date of Birth</label>
+                    <input type="date" id="dob" max="">
+                </td>
+            </tr>
+            <tr>
+                <td> <label>Phone</label>
+                    <input type="tel">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>NRC</label>
+                    <input type="text">
+                </td>
+            </tr>
+            <tr>
+                <td> <label>Father Name</label>
+                    <input type="text">
+                </td>
+            </tr>
+            <tr>
+                <td> <label>Home Address</label>
+                    <textarea cols="30" rows="3"></textarea>
+                </td>
+            </tr>
+
+            <tr>
+
+                <td>
+                    <label>Batch Name</label>
+                    <select id="selBatchName">
+                        <option value="b5">EWADB5</option>
+                        <option value="b4">EWADB4</option>
+                        <option value="b3">EWADB3</option>
+                        <option value="b2">EWADB2</option>
+                        <option value="b1">EWADB1</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit" onclick="postData();">Entry</button>
+                    <button type="reset">Cancel</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+
+</html>

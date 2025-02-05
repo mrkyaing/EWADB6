@@ -1,0 +1,42 @@
+﻿<form action="/employee/EmployeeList" method="post">
+  @for(int i=0;i<3;i++){
+        <h3>employee @(i+1)</h3>
+        <hr />
+        <table>
+            <tr>
+                <td>
+                    <label>Id</label>
+                    <input type="number" name="[@i].Id" placeholder="Type your code" required class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>First Name</label>
+                    <input type="text" name="[@i].FirstName" placeholder="Type your name" required class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Last Name</label>
+                    <input type="text" name="[@i].LastName" placeholder="Type your LastName" required class="form-control">
+                </td>
+            </tr>
+        </table>
+  }
+  <div class="container">
+        <button type="submit" class="btn btn-success" id="btnEntry">Entry</button>
+        <button type="reset" class="btn btn-danger">Cancel</button>
+  </div>
+  
+  @if (ViewBag.TotalCount!=null){
+        <div class="alert alert-success">
+            Total Employee Count: @ViewBag.TotalCount
+        </div>
+    }
+
+</form>
+<script>
+    $("#btnEntry").on('click',function (){
+        return 
+    });
+</script>
