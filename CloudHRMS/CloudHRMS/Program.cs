@@ -16,12 +16,12 @@ builder.Services.AddDbContext<HRMSDbContext>(o => o.UseSqlServer(config.GetConne
 //Add the IUnit Of work to access database operation process .
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IPositionService, PositionService>();
+builder.Services.AddTransient<IEmployeeService, EmployeeService>();
 //adding the connection to the PostgreSQL database
 //builder.Services.AddDbContext<HRMSDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 var app = builder.Build();
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
+if (!app.Environment.IsDevelopment()) {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
@@ -32,13 +32,11 @@ app.UseRouting();
 app.UseAuthentication();
 //second enable Authorization process
 app.UseAuthorization();
-app.UseStatusCodePages(async context =>
-    {
-        if (context.HttpContext.Response.StatusCode == 404)
-        {
-            context.HttpContext.Response.Redirect("/Home/AccessDenied");
-        }
-    });
+app.UseStatusCodePages(async context => {
+    if (context.HttpContext.Response.StatusCode == 404) {
+        context.HttpContext.Response.Redirect("/Home/AccessDenied");
+    }
+});
 app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
 //Map the razor page routes
 app.MapRazorPages();

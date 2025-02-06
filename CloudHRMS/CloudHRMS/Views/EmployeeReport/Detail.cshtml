@@ -1,0 +1,19 @@
+﻿@if (ViewBag.Msg != null)
+{
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Msg
+    </div>
+}
+<h3>Employee Detail Report </h3>
+<form action="/employeereport/detail" method="post">
+    <div class="mb-3">
+        <label for="employeeCode" class="form-label">From Code</label>
+        <input type="text" class="form-control" name="FromCode" placeholder="type your employee code" required>
+    </div>
+    <div class="mb-3">
+        <label for="employeeCode" class="form-label">To Code</label>
+        <input type="text" class="form-control" name="ToCode" placeholder="type your employee code" required>
+    </div>
+    <button type="submit" class="btn btn-success">Download</button>
+    <button type="reset" class="btn btn-primary">Cancel</button>
+</form>
