@@ -256,8 +256,11 @@
         <!--end::Container-->
     </div>
 }
-else{
+else if(User.IsInRole("EMPLOYEE")){
     <p>You are employee role</p>
+}
+else{
+     <p>Welcome to Cloud HRMS System</p>
 }
 <script>
     const visitors_chart_options = {
