@@ -30,7 +30,9 @@
             }
             <th scope="col">Address</th>
             <th scope="col">Phone</th>
-            <th scope="col">Actions</th>
+           @if(User.IsInRole("HR")){
+                <th scope="col">Actions</th>
+           }
         </tr>
     </thead>
     <tbody>
@@ -53,11 +55,13 @@
                 }
                 <td>@item.Address</td>
                 <td>@item.Phone</td>
-                <td>
-                    <a href="/employee/Edit?id=@item.Id" role="button" class="btn btn-success">Edit</a>
-                    <a href="/employee/deletebyId?id=@item.Id" role="button" class="btn btn-danger"
-                        onclick="return confirm('Are  you sure to delete this recrod?');">Delete</a>
-                </td>
+                @if(User.IsInRole("HR")){
+                    <td>
+                        <a href="/employee/Edit?id=@item.Id" role="button" class="btn btn-success">Edit</a>
+                        <a href="/employee/deletebyId?id=@item.Id" role="button" class="btn btn-danger"
+                           onclick="return confirm('Are  you sure to delete this recrod?');">Delete</a>
+                    </td>
+                }
             </tr>
         }
     </tbody>

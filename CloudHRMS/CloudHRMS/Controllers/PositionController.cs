@@ -1,5 +1,6 @@
 ﻿using CloudHRMS.Models.ViewModels;
 using CloudHRMS.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 //တု-တစ်ခြားသူပြုလိုက်ထားတာကို အတူယူ လိုက်ကြည့်တာ
 //စု - ကောင်းတာ သင့်လျော်တာ စုဆောင်းခြင်း
@@ -23,6 +24,7 @@ namespace CloudHRMS.Controllers {
         public IActionResult Entry() {
             return View();
         }
+        [Authorize(Roles = "HR")]
         [HttpPost]
         public IActionResult Entry(PositionViewModel positionViewModel) {
             try {
@@ -34,8 +36,9 @@ namespace CloudHRMS.Controllers {
             }
             return RedirectToAction("List");
         }
+        [Authorize(Roles = "HR,EMPLOYEE")]
         public IActionResult List() => View(_positionService.GetAll());
-
+        [Authorize(Roles = "HR")]
         public IActionResult DeletebyId(string id) {
             try {
                 _positionService.Delete(id);
@@ -46,10 +49,12 @@ namespace CloudHRMS.Controllers {
             }
             return RedirectToAction("List");
         }
+        [Authorize(Roles = "HR")]
         public IActionResult Edit(string Id) {
             return View(_positionService.GetById(Id));
         }
         [HttpPost]
+        [Authorize(Roles = "HR")]
         public IActionResult Update(PositionViewModel positionViewModel) {
             try {
                 _positionService.Update(positionViewModel);

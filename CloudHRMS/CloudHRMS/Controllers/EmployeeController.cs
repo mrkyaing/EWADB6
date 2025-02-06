@@ -2,6 +2,7 @@
 using CloudHRMS.Models.DataModels;
 using CloudHRMS.Models.ViewModels;
 using CloudHRMS.Utlitity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace CloudHRMS.Controllers {
     public class EmployeeController : Controller {
@@ -10,6 +11,7 @@ namespace CloudHRMS.Controllers {
         public EmployeeController(HRMSDbContext hRMSDbContext) {
             _hRMSDbContext = hRMSDbContext;
         }
+        [Authorize(Roles = "EMPLOYEE,HR")]
         //Reterived : Employee List
         public IActionResult List() {
             //DTO >> data transfer object process in here  (Data Model =>viewModel)
@@ -38,6 +40,7 @@ namespace CloudHRMS.Controllers {
                                                   }).ToList();
             return View(employees);
         }
+        [Authorize(Roles = "HR")]
         //C:Create 
         public IActionResult Entry() {
             EmployeeViewModel employeeViewModel = new EmployeeViewModel();
@@ -53,6 +56,7 @@ namespace CloudHRMS.Controllers {
 
             return View(employeeViewModel);
         }
+        [Authorize(Roles = "HR")]
         [HttpPost]
         public IActionResult Entry(EmployeeViewModel employeeViewModel) {
             try {
@@ -86,7 +90,7 @@ namespace CloudHRMS.Controllers {
             }
             return RedirectToAction("List");
         }
-
+        [Authorize(Roles = "HR")]
         //D: Delete
         public IActionResult DeleteById(string id) {//1
             try {
@@ -104,6 +108,7 @@ namespace CloudHRMS.Controllers {
             return RedirectToAction("List");
         }
 
+        [Authorize(Roles = "HR")]
         //U:Update
         public IActionResult Edit(string id) {
             EmployeeViewModel employee = _hRMSDbContext.Employees.Where(w => w.IsActive && w.Id == id).Select(s => new EmployeeViewModel() {
@@ -131,7 +136,7 @@ namespace CloudHRMS.Controllers {
             }).ToList();
             return View(employee);
         }
-
+        [Authorize(Roles = "HR")]
         [HttpPost]
         public IActionResult Update(EmployeeViewModel employeeViewModel) {
             try {
