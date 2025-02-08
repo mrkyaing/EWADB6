@@ -15,8 +15,10 @@ var config = builder.Configuration;
 builder.Services.AddDbContext<HRMSDbContext>(o => o.UseSqlServer(config.GetConnectionString("CloudHRMSConnectionString")));
 //Add the IUnit Of work to access database operation process .
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<IDepartmentService, DepartmentService>();
 builder.Services.AddTransient<IPositionService, PositionService>();
 builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+builder.Services.AddTransient<IUserService, UserService>();
 //adding the connection to the PostgreSQL database
 //builder.Services.AddDbContext<HRMSDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 var app = builder.Build();

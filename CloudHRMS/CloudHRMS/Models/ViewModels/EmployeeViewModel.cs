@@ -22,5 +22,6 @@
         //for select box controls data bind
         public IList<PositionViewModel> PositionViewModels { get; set; }
         public IList<DepartmentViewModel> DepartmentViewModels { get; set; }
+        public string UserId { get; set; }
     }
 }

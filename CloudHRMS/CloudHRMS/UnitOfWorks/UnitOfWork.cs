@@ -19,6 +19,13 @@ namespace CloudHRMS.UnitOfWorks {
                 return _employeeRepository = _employeeRepository ?? new EmployeeRepository(_dbContext);
             }
         }
+
+        private IDepartmentRepository departmentRepository;
+        public IDepartmentRepository DepartmentRepository {
+            get {
+                return departmentRepository = departmentRepository ?? new DepartmentRepository(_dbContext);
+            }
+        }
         //------------------------------
         public void Commit() {
             _dbContext.SaveChanges();

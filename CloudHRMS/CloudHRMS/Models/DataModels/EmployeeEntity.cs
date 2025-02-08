@@ -25,5 +25,8 @@ namespace CloudHRMS.Models.DataModels {
         //forgein key in here.
         [ForeignKey(nameof(PositionId))]
         public required string PositionId { get; set; }
+
+        [ForeignKey(nameof(UserId))]
+        public string UserId { get; set; }
     }
 }
