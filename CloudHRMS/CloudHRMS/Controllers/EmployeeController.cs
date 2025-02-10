@@ -15,6 +15,7 @@ namespace CloudHRMS.Controllers {
             this._positionService = positionService;
             this._departmentService = departmentService;
         }
+
         [Authorize(Roles = "EMPLOYEE,HR")]
         //Reterived : Employee List
         public async Task<IActionResult> List() {

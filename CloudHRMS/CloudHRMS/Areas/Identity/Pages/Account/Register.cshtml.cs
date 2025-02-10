@@ -118,5 +118,6 @@ namespace CloudHRMS.Areas.Identity.Pages.Account {
             }
             return (IUserEmailStore<IdentityUser>)_userStore;
         }
+
     }
 }

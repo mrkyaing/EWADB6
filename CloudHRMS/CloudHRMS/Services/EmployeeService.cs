@@ -8,7 +8,6 @@ namespace CloudHRMS.Services {
     public class EmployeeService : IEmployeeService {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserService _userService;
-
         public EmployeeService(IUnitOfWork unitOfWork, IUserService userService) {
             this._unitOfWork = unitOfWork;
             this._userService = userService;
@@ -86,7 +85,7 @@ namespace CloudHRMS.Services {
         }
 
         public async Task<IList<EmployeeViewModel>> GetAll(string userId) {
-            var roles = await _userService.GetRolesByUserId(userId);
+            var roles = await _userService.GetRolesByUserIdAync(userId);
             //DTO >> data transfer object process in here  (Data Model =>viewModel)
             IList<EmployeeViewModel> employees = (from e in _unitOfWork.EmployeeRepository.GetAll(w => w.IsActive)
                                                   join d in _unitOfWork.DepartmentRepository.GetAll(w => w.IsActive)
