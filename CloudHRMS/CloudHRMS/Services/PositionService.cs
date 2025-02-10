@@ -11,7 +11,7 @@ namespace CloudHRMS.Services {
             this._unitOfWork = unitOfWork;
         }
 
-        public void Create(PositionViewModel positionViewModel) {
+        public PositionViewModel Create(PositionViewModel positionViewModel) {
             //data exchange from view model to data model
             try {
                 var positionEntity = new PositionEntity() {
@@ -26,9 +26,11 @@ namespace CloudHRMS.Services {
                 };
                 _unitOfWork.PositoryRepository.Create(positionEntity);
                 _unitOfWork.Commit();
+                return positionViewModel;
             }
             catch (Exception) {
                 _unitOfWork.Rollback();
+                throw;
             }
         }
 
@@ -69,7 +71,7 @@ namespace CloudHRMS.Services {
             return positionViewMoel;
         }
 
-        public void Update(PositionViewModel positionViewModel) {
+        public PositionViewModel Update(PositionViewModel positionViewModel) {
             try {
                 PositionEntity positionEntity = _unitOfWork.PositoryRepository.GetBy(w => w.IsActive && w.Id == positionViewModel.Id).SingleOrDefault();
                 if (positionEntity is not null) {
@@ -81,9 +83,11 @@ namespace CloudHRMS.Services {
                 }
                 _unitOfWork.PositoryRepository.Update(positionEntity);
                 _unitOfWork.Commit();
+                return positionViewModel;
             }
             catch (Exception ex) {
                 _unitOfWork.Rollback();
+                throw;
             }
         }
     }

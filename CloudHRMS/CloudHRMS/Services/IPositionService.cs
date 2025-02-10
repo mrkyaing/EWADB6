@@ -2,10 +2,10 @@
 
 namespace CloudHRMS.Services {
     public interface IPositionService {
-        void Create(PositionViewModel positionViewModel);
+        PositionViewModel Create(PositionViewModel positionViewModel);
         IEnumerable<PositionViewModel> GetAll();
         PositionViewModel GetById(string id);
-        void Update(PositionViewModel positionViewModel);
+        PositionViewModel Update(PositionViewModel positionViewModel);
         bool Delete(string id);
     }
 }
