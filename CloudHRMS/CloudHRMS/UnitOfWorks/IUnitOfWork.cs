@@ -9,6 +9,8 @@ namespace CloudHRMS.UnitOfWorks {
         IShiftRepository ShiftRepository { get; }
         IShiftAssignRepository ShiftAssignRepository { get; }
         IDailyAttendanceRepository DailyAttendanceRepository { get; }
+        IAttendanceMasterRepository AttendanceMasterRepository { get; }
+        IPayrollRepository PayrollRepository { get; }
         //for commit stages(insert,update,delete)
         void Commit();
         void Rollback();

@@ -16,9 +16,19 @@ namespace CloudHRMS.Repositories.Common {
             _context.Add<T>(entity);
         }
 
+        public void Create(IList<T> entities) {
+            foreach (var entity in entities) {
+                _context.Add<T>(entity);
+            }
+        }
+
         public void Delete(T entity) {
             //called to update function
             Update(entity);
+        }
+
+        public void Delete(T entity, bool isHardDeleted) {
+            _context.Remove<T>(entity);
         }
 
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> expression) {

@@ -33,7 +33,7 @@
         </div>
         <div class="form-group">
             <label for="departments" class="form-label">Department </label>
-            <select class="form-select" name="departmentId" id="departmentId">
+            <select class="form-select" name="DepartmentId" id="departmentId">
                 @foreach (var item in Model.Departments)
                 {
                  if(item.Id==Model.DepartmentId){
@@ -47,7 +47,7 @@
         </div>
         <div class="form-group">
             <label for="employees" class="form-label">Employee </label>
-            <select class="form-select" name="employeeId" id="xemployeeId">
+            <select class="form-select" name="EmployeeId" id="employeeId">
                 @foreach (var item in Model.Employees)
                 {
                     if(item.Id==Model.EmployeeId){
@@ -75,11 +75,11 @@
             url: url,
             data: { departmentId: departmentId },
             success: function (res) {
-                $("#xemployeeId").empty();
-                $("#xemployeeId").append("<option class='form-select' value=''>-- SELECT ONE --</option>");
+                $("#employeeId").empty();
+                $("#employeeId").append("<option class='form-select' value=''>-- SELECT ONE --</option>");
                 $.each(res, function (i, item) {
                     // Create and append the new options into the select list
-                    $("#xemployeeId").append("<option class='form-select' value='" + item.id + "'>" + item.name + "</option>");
+                    $("xemployeeId").append("<option class='form-select' value='" + item.id + "'>" + item.name + "</option>");
                 });
             },
             error: function (err) {

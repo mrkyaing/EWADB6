@@ -68,14 +68,21 @@ namespace CloudHRMS.Services {
         }
 
         public IEnumerable<DailyAttendanceViewModel> GetAll() {
-            IList<DailyAttendanceViewModel> dailyAttendanceViewModels = _unitOfWork.DailyAttendanceRepository.GetAll(w => w.IsActive).Select(x => new DailyAttendanceViewModel {
-                Id = x.Id,
-                EmployeeId = x.EmployeeId,
-                DepartmentId = x.DepartmentId,
-                InTime = x.InTime,
-                OutTime = x.OutTime,
-                AttendanceDate = x.AttendanceDate
-            }).ToList();
+            IList<DailyAttendanceViewModel> dailyAttendanceViewModels = (from da in _unitOfWork.DailyAttendanceRepository.GetAll(w => w.IsActive)
+                                                                         join d in _unitOfWork.DepartmentRepository.GetAll(w => w.IsActive)
+                                                                        on da.DepartmentId equals d.Id
+                                                                         join e in _unitOfWork.EmployeeRepository.GetAll(w => w.IsActive)
+                                                                         on da.EmployeeId equals e.Id
+                                                                         select new DailyAttendanceViewModel {
+                                                                             Id = da.Id,
+                                                                             EmployeeId = da.EmployeeId,
+                                                                             DepartmentId = da.DepartmentId,
+                                                                             InTime = da.InTime,
+                                                                             OutTime = da.OutTime,
+                                                                             AttendanceDate = da.AttendanceDate,
+                                                                             DepartmentName = d.Description,
+                                                                             EmployeeName = e.Name
+                                                                         }).ToList();
             return dailyAttendanceViewModels;
         }
 

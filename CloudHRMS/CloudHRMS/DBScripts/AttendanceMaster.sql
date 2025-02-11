@@ -1,0 +1,21 @@
+CREATE TABLE AttendanceMaster (
+    Id CHAR(36) NOT NULL PRIMARY KEY,
+    AttendanceDate DATETIME NOT NULL,
+    InTime TIME NOT NULL,
+    OutTime TIME NOT NULL,
+    EmployeeId NVARCHAR(36) NOT NULL,
+    DepartmentId NVARCHAR(36) NOT NULL,
+    ShiftId CHAR(36) NOT NULL,
+    IsLate BIT NOT NULL,
+    IsEarlyOut BIT NOT NULL,
+    IsLeave BIT NOT NULL,
+    CreatedAt DATETIME NOT NULL,
+    CreatedBy NVARCHAR(100) NOT NULL,
+    UpdatedAt DATETIME NULL,
+    UpdatedBy NVARCHAR(100) NULL,
+    Ip NVARCHAR(45) NOT NULL,
+    IsActive BIT NOT NULL,
+    CONSTRAINT FK_AttendanceMaster_Employee FOREIGN KEY (EmployeeId) REFERENCES Employee(Id),
+    CONSTRAINT FK_AttendanceMaster_Department FOREIGN KEY (DepartmentId) REFERENCES Department(Id),
+    CONSTRAINT FK_AttendanceMaster_Shift FOREIGN KEY (ShiftId) REFERENCES Shift(Id)
+);

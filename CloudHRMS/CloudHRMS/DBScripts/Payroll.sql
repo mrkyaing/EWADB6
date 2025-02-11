@@ -1,0 +1,23 @@
+CREATE TABLE Payroll (
+    Id CHAR(36) NOT NULL PRIMARY KEY,
+    FromDate DATETIME NOT NULL,
+    ToDate DATETIME NOT NULL,
+    EmployeeId NVARCHAR(36) NOT NULL,
+    DepartmentId NVARCHAR(36) NOT NULL,
+    IncomeTax DECIMAL(18,2) NOT NULL,
+    GrossPay DECIMAL(18,2) NOT NULL,
+    NetPay DECIMAL(18,2) NOT NULL,
+    Allowance DECIMAL(18,2) NOT NULL,
+    Deduction DECIMAL(18,2) NOT NULL,
+    AttendanceDays DECIMAL(18,2) NOT NULL,
+    AttendanceDeduction DECIMAL(18,2) NOT NULL,
+    PayPerDay DECIMAL(18,2) NOT NULL,
+    CreatedAt DATETIME NOT NULL,
+    CreatedBy NVARCHAR(100) NOT NULL,
+    UpdatedAt DATETIME NULL,
+    UpdatedBy NVARCHAR(100) NULL,
+    Ip NVARCHAR(45) NOT NULL,
+    IsActive BIT NOT NULL,
+    CONSTRAINT FK_Payroll_Employee FOREIGN KEY (EmployeeId) REFERENCES Employee(Id),
+    CONSTRAINT FK_Payroll_Department FOREIGN KEY (DepartmentId) REFERENCES Department(Id)
+);
