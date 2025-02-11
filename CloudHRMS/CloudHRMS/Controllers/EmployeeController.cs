@@ -56,7 +56,6 @@ namespace CloudHRMS.Controllers {
             try {
                 _employeeService.Delete(id);
                 TempData["Msg"] = "Employee record is deleted successfully.";
-
             }
             catch (Exception e) {
                 TempData["Msg"] = "Error occurs when employee record is deleted.";

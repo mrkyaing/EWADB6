@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Policy Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+        <h2 class="text-center">Attendance Policy Form</h2>
+        @if (TempData["Msg"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @TempData["Msg"]
+            </div>
+        }
+        <form action="/attendancePolicy/entry" method="post">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Enter the name of AttendancePolicy" required>
+            </div>
+
+            <div class="form-group">
+                <label for="numberOfLateTime">Number Of Late Time</label>
+                <input type="number" class="form-control" id="numberOfLateTime" name="numberOfLateTime" placeholder="Enter the Number Of Late Time" required>
+            </div>
+
+            <div class="form-group">
+                <label for="numberOfEarlyOutTime">Number Of EarlyOut Time</label>
+                <input type="number" class="form-control" id="numberOfEarlyOutTime" name="numberOfEarlyOutTime" placeholder="Enter the Number Of EarlyOut Time" required>
+            </div>
+            <div class="form-group">
+                <label for="DeductionInAmount">Deduction In Amount</label>
+                <input type="number" class="form-control" id="DeductionInAmount" name="DeductionInAmount" placeholder="Enter the Deduction In Amount" required>
+            </div><div class="form-group">
+                <label for="deductionInDay">DeductionInDay</label>
+                <input type="number" class="form-control" id="deductionInDay" name="deductionInDay" placeholder="Enter the Deduction In Day" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="border-color: #00008B; background-color: #00008B;">Entry</button>
+            <button type="reset" class="btn btn-primary" style="border-color: #dc3545; background-color: #dc3545;">Cancel</button>
+        </form>
+</body>
+</html>

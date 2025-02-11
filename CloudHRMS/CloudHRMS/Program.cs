@@ -18,6 +18,10 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IDepartmentService, DepartmentService>();
 builder.Services.AddTransient<IPositionService, PositionService>();
 builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+builder.Services.AddTransient<IShiftService, ShiftService>();
+builder.Services.AddTransient<IShiftAssignService, ShiftAssignService>();
+builder.Services.AddTransient<IAttendancePolicyService, AttendancePolicyService>();
+builder.Services.AddTransient<IDailyAttendanceService, DailyAttendanceService>();
 builder.Services.AddTransient<IUserService, UserService>();
 //adding the connection to the PostgreSQL database
 //builder.Services.AddDbContext<HRMSDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));

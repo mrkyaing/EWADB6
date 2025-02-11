@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+@model CloudHRMS.Models.ViewModels.ShiftViewModel;
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Edition of Shift Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+        <h2 class="text-center">The Edition of Shift Form</h2>
+
+        @if (TempData["Msg"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @TempData["Msg"]
+            </div>
+        }
+        <form action="/shift/update" method="post">
+            <input type="hidden" class="form-control" id="id" name="id" value="@Model.Id" required>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Enter the name of AttendancePolicy" value="@Model.Name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="numberOfLateTime">In Time</label>
+                <input type="time" class="form-control" id="inTime" name="inTime" placeholder="Enter In Time" value="@Model.InTime" required>
+            </div>
+
+            <div class="form-group">
+                <label for="numberOfEarlyOutTime">Out Time</label>
+                <input type="time" class="form-control" id="outTime" name="outTime" placeholder="Enter Out Time" value="@Model.OutTime" required>
+            </div>
+            <div class="form-group">
+                <label for="DeductionInAmount">Late After</label>
+                <input type="time" class="form-control" id="lateAfter" name="lateAfter" placeholder="Enter the time of Late After" value="@Model.LateAfter" required>
+            </div>
+            <div class="form-group">
+                <label for="deductionInDay">Early Out Before</label>
+                <input type="time" class="form-control" id="earlyOutBefore" name="earlyOutBefore" placeholder="Enter the EarlyOut Before" value="@Model.EarlyOutBefore" required>
+            </div>
+            <div class="form-group">
+                <label for="attendancePolicies" class="form-label">Attendance Policy</label>
+
+                <select class="form-select" name="AttendancePolicyId">
+                    @foreach (var item in Model.AttendancePolicies)
+                    {
+                        if (Model.AttendancePolicyId == item.Id)
+                        {
+                            <option class="form-select" value="@item.Id" selected>@item.Name</option>
+                        }
+                        else
+                        {
+                            <option class="form-select" value="@item.Id">@item.Name</option>
+                        }
+                    }
+                </select>
+
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a href="/shift/List" role="button" class="btn btn-primary">Cancel</a>
+        </form>
+</body>
+</html>
