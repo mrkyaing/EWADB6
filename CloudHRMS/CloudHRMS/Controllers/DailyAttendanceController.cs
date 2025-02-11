@@ -45,7 +45,12 @@ namespace CloudHRMS.Controllers {
             return RedirectToAction("List");
         }
         public IActionResult Edit(string Id) {
-            return View(_dailyAttendanceService.GetBy(Id));
+            IList<DepartmentViewModel> departmentList = _dailyAttendanceService.GetDepartments();
+            IList<EmployeeViewModel> employees = _dailyAttendanceService.GetEmployees();
+            DailyAttendanceViewModel dailyAttendance = _dailyAttendanceService.GetBy(Id);
+            dailyAttendance.Departments = departmentList;
+            dailyAttendance.Employees = employees;
+            return View(dailyAttendance);
         }
         [HttpPost]
         public IActionResult Update(DailyAttendanceViewModel dailyAttendanceViewModel) {

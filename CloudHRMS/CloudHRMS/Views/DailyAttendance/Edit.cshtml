@@ -1,64 +1,90 @@
 ﻿<!DOCTYPE html>
-@model CloudHRMS.Models.ViewModels.ShiftViewModel;
+@model CloudHRMS.Models.ViewModels.DailyAttendanceViewModel;
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Edition of Shift Form</title>
+    <title>Daily Attendance Edit Form</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
-        <h2 class="text-center">The Edition of Shift Form</h2>
-        @if (TempData["Msg"] != null)
-        {
-            <div class="alert alert-success" role="alert">
-                @TempData["Msg"]
-            </div>
-        }
-        <form action="/shift/update" method="post">
-            <input type="hidden" class="form-control" id="id" name="id" value="@Model.Id" required>
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Enter the name of AttendancePolicy" value="@Model.Name" required>
-            </div>
+    <h2 class="text-center">Daily Attendance Edit Form</h2>
+    @if (TempData["Msg"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["Msg"]
+        </div>
+    }
+    <form action="/dailyAttendance/update" method="post">
+        <div class="form-group">
+            <label for="name">AttendanceDate</label>
+            <input type="date" class="form-control" id="attendanceDate" name="attendanceDate" placeholder="Enter the name of AttendancePolicy" required value="@Model.AttendanceDate.ToString("yyyy-MM-dd")">
+        </div>
 
-            <div class="form-group">
-                <label for="numberOfLateTime">In Time</label>
-                <input type="time" class="form-control" id="inTime" name="numberOfLateTime" placeholder="Enter In Time" value="@Model.InTime" required>
-            </div>
+        <div class="form-group">
+            <label for="numberOfLateTime">In Time</label>
+            <input type="time" class="form-control" id="inTime" name="inTime" placeholder="Enter In Time" required value="@Model.InTime">
+        </div>
 
-            <div class="form-group">
-                <label for="numberOfEarlyOutTime">Out Time</label>
-                <input type="time" class="form-control" id="outTime" name="outTime" placeholder="Enter Out Time" value="@Model.OutTime" required>
-            </div>
-            <div class="form-group">
-                <label for="DeductionInAmount">Late After</label>
-                <input type="time" class="form-control" id="lateAfter" name="lateAfter" placeholder="Enter the time of Late After" value="@Model.LateAfter" required>
-            </div>
-            <div class="form-group">
-                <label for="deductionInDay">Early Out Before</label>
-                <input type="time" class="form-control" id="earlyOutBefore" name="earlyOutBefore" placeholder="Enter the EarlyOut Before" value="@Model.EarlyOutBefore" required>
-            </div>
-            <div class="form-group">
-                <label for="attendancePolicies" class="form-label">Attendance Policy</label>
-
-                <select class="form-select" name="AttendancePolicyId">
-                    @foreach (var item in Model.AttendancePolicies)
-                    {
-                        if (Model.AttendancePolicyId == item.Id)
-                        {
-                            <option class="form-select" value="@item.Id" selected>@item.Name</option>
-                        }
-                        else
-                        {
-                            <option class="form-select" value="@item.Id">@item.Name</option>
-                        }
+        <div class="form-group">
+            <label for="numberOfEarlyOutTime">Out Time</label>
+            <input type="time" class="form-control" id="outTime" name="outTime" placeholder="Enter Out Time" required value="@Model.OutTime">
+        </div>
+        <div class="form-group">
+            <label for="departments" class="form-label">Department </label>
+            <select class="form-select" name="departmentId" id="departmentId">
+                @foreach (var item in Model.Departments)
+                {
+                 if(item.Id==Model.DepartmentId){
+                        <option selected class="form-select" value="@item.Id">@(item.Code + "-" + item.Description)</option>
+                 }
+                 else {
+                        <option class="form-select" value="@item.Id">@(item.Code + "-" + item.Description)</option>
+                 }
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="employees" class="form-label">Employee </label>
+            <select class="form-select" name="employeeId" id="xemployeeId">
+                @foreach (var item in Model.Employees)
+                {
+                    if(item.Id==Model.EmployeeId){
+                        <option selected class="form-select" value="@item.Id">@(item.Code + "-" + item.Name)</option>
                     }
-                </select>
-
-            </div>
-            <button type="submit" class="btn btn-primary">Update</button>
-            <a href="/shift/List" role="button" class="btn btn-primary">Cancel</a>
-        </form>
+                   else{
+                        <option class="form-select" value="@item.Id">@(item.Code + "-" + item.Name)</option>
+                   }
+                }
+            </select>
+        </div>
+        <!-- -->
+        <button type="submit" class="btn btn-primary" style="border-color: #00008B; background-color: #00008B;">Update</button>
+        <button type="reset" class="btn btn-primary" style="border-color: #dc3545; background-color: #dc3545;">Cancel</button>
+    </form>
 </body>
 </html>
+<script>
+    $('#departmentId').on('change', function () {
+        var url = '/dailyAttendance/getEmployeeList';
+        var departmentId = $('#departmentId').val();
+        $.ajax({
+            type: 'GET',
+            dataType: 'JSON',
+            url: url,
+            data: { departmentId: departmentId },
+            success: function (res) {
+                $("#xemployeeId").empty();
+                $("#xemployeeId").append("<option class='form-select' value=''>-- SELECT ONE --</option>");
+                $.each(res, function (i, item) {
+                    // Create and append the new options into the select list
+                    $("#xemployeeId").append("<option class='form-select' value='" + item.id + "'>" + item.name + "</option>");
+                });
+            },
+            error: function (err) {
+                alert('error while processing the request');
+            }
+        });
+    });
+</script>
