@@ -36,7 +36,7 @@ namespace CloudHRMS.UnitTests.Domains {
             //2)Action
             var postionSerice = new PositionService(unitOfWorkMock.Object);
             //3)Assert
-            var actualResult = postionSerice.Create(expectedPostionViewModel);
+            var actualResult = postionSerice.Create(expectedPostionViewModel, "1");
             Assert.Equal(expectedPostionViewModel, actualResult);
         }
 
@@ -54,7 +54,7 @@ namespace CloudHRMS.UnitTests.Domains {
             //2) Action
             var positionService = new PositionService(unitOfWorkMock.Object);
             //3) Assert
-            Assert.Throws<Exception>(() => positionService.Create(expectedPostionViewModel));
+            Assert.Throws<Exception>(() => positionService.Create(expectedPostionViewModel, "1"));
         }
     }
 }

@@ -15,14 +15,15 @@
             <td scope="col">ToDate</td>
             <td scope="col">Employee</td>
             <td scope="col">Department</td>
-            <td scope="col">Basic Salary</td>
-            <td scope="col">IncomeTax</td>
-            <td scope="col">GrossPay</td>
-            <td scope="col">Allowance</td>
-            <td scope="col">Deduction</td>
-            <td scope="col">Attendance Deduction</td>
-            <td scope="col">Net Pay</td>
+            <td scope="col">Basic Salary (MMK)</td>
+            <td scope="col">IncomeTax (MMK)</td>
+            <td scope="col">Gross Pay (MMK)</td>
+            <td scope="col">Allowance (MMK)</td>
+            <td scope="col">Deduction (MMK)</td>
+            <td scope="col">Attendance Deduction (MMK)</td>
+            <td scope="col">Net Pay (MMK)</td>
             <td scope="col">Attendance Days</td>
+            <td scope="col">Pay Per Day (MMK)</td>
             @if (User.IsInRole("HR"))
             {
                 <th scope="col">Actions</th>
@@ -49,12 +50,15 @@
                 <td>@item.AttendanceDeduction</td>
                 <td>@item.NetPay</td>
                 <td>@item.AttendanceDays</td>
+                <td>@item.PayPerDay</td>
                 @if (User.IsInRole("HR"))
                 {
                     <td>
                         <div class="btn btn-group">
                             <a href="#" class="btn btn-primary" role="button">Edit</a>
-                            <a asp-action="Delete" asp-controller="Payroll" asp-route-id="@item.Id" onclick="return confirm('are you sure to delete this record?');" class="btn btn-danger" role="button"> Delete</a>
+                            <a asp-action="Delete" asp-controller="Payroll" asp-route-id="@item.Id"
+                                onclick="return confirm('are you sure to delete this record?');" class="btn btn-danger"
+                                role="button"> Delete</a>
                         </div>
                     </td>
                 }

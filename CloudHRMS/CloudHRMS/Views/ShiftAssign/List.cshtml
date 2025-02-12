@@ -1,9 +1,10 @@
 ﻿@model IList<CloudHRMS.Models.ViewModels.ShiftAssignViewModel>
+
 <head>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 </head>
 <h1>
-    The List Of Shift Information
+    Shift Assign Information
 </h1>
 @if (TempData["Msg"] != null)
 {
@@ -34,15 +35,17 @@
                 <td>@item.ToDate.ToString("yyyy-MM-dd")</td>
 
                 <td>
-                    <a href="/shiftAssign/edit?id=@item.Id" role="button" class="btn btn-success"> Edit </a><!--/department/edit" --><!--/department/delete" -->
-                    <a href="/shiftAssign/deletebyId?id=@item.Id" role="button" class="btn btn-danger" onclick="return confirm('Are you to delete this record')" ;> Delete </a>
+                    <a href="/shiftAssign/edit?id=@item.Id" role="button" class="btn btn-success"> Edit
+                    </a><!--/department/edit" --><!--/department/delete" -->
+                    <a href="/shiftAssign/deletebyId?id=@item.Id" role="button" class="btn btn-danger"
+                        onclick="return confirm('Are you to delete this record')" ;> Delete </a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 <script>
-        $(document).ready( function () {
+    $(document).ready(function () {
         $('#ShiftTable').DataTable();
-    } );
+    });
 </script>
