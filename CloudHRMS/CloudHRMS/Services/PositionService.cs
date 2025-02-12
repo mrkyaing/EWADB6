@@ -3,24 +3,30 @@ using CloudHRMS.Models.ViewModels;
 using CloudHRMS.UnitOfWorks;
 using CloudHRMS.Utlitity;
 
-namespace CloudHRMS.Services {
-    public class PositionService : IPositionService {
+namespace CloudHRMS.Services
+{
+    public class PositionService : IPositionService
+    {
         private readonly IUnitOfWork _unitOfWork;
 
-        public PositionService(IUnitOfWork unitOfWork) {
+        public PositionService(IUnitOfWork unitOfWork)
+        {
             this._unitOfWork = unitOfWork;
         }
 
-        public PositionViewModel Create(PositionViewModel positionViewModel) {
+        public PositionViewModel Create(PositionViewModel positionViewModel, string loginUserId)
+        {
             //data exchange from view model to data model
-            try {
-                var positionEntity = new PositionEntity() {
+            try
+            {
+                var positionEntity = new PositionEntity()
+                {
                     Id = Guid.NewGuid().ToString(),
                     Code = positionViewModel.Code,
                     Description = positionViewModel.Description,
                     Level = positionViewModel.Level,
                     CreatedAt = DateTime.Now,
-                    CreatedBy = "system",
+                    CreatedBy = loginUserId,
                     IsActive = true,
                     Ip = NetworkHelper.GetIpAddress()
                 };
@@ -28,31 +34,38 @@ namespace CloudHRMS.Services {
                 _unitOfWork.Commit();
                 return positionViewModel;
             }
-            catch (Exception) {
+            catch (Exception)
+            {
                 _unitOfWork.Rollback();
                 throw;
             }
         }
 
-        public bool Delete(string id) {
-            try {
+        public bool Delete(string id)
+        {
+            try
+            {
                 PositionEntity positionEntity = _unitOfWork.PositoryRepository.GetBy(w => w.Id == id && w.IsActive).SingleOrDefault();
-                if (positionEntity is not null) {
+                if (positionEntity is not null)
+                {
                     positionEntity.IsActive = false;
                     _unitOfWork.PositoryRepository.Update(positionEntity);
                     _unitOfWork.Commit();
                     return true;
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 _unitOfWork.Rollback();
             }
             return false;
         }
 
-        public IEnumerable<PositionViewModel> GetAll() {
+        public IEnumerable<PositionViewModel> GetAll()
+        {
             IList<PositionViewModel> positionViewMoel = _unitOfWork.PositoryRepository.GetAll(w => w.IsActive).Select(
-                    s => new PositionViewModel() {
+                    s => new PositionViewModel()
+                    {
                         Id = s.Id,
                         Code = s.Code,
                         Description = s.Description,
@@ -61,8 +74,10 @@ namespace CloudHRMS.Services {
             return positionViewMoel;
         }
 
-        public PositionViewModel GetById(string id) {
-            PositionViewModel positionViewMoel = _unitOfWork.PositoryRepository.GetBy(w => w.Id == id && w.IsActive).Select(s => new PositionViewModel() {
+        public PositionViewModel GetById(string id)
+        {
+            PositionViewModel positionViewMoel = _unitOfWork.PositoryRepository.GetBy(w => w.Id == id && w.IsActive).Select(s => new PositionViewModel()
+            {
                 Id = s.Id,
                 Code = s.Code,
                 Description = s.Description,
@@ -71,13 +86,16 @@ namespace CloudHRMS.Services {
             return positionViewMoel;
         }
 
-        public PositionViewModel Update(PositionViewModel positionViewModel) {
-            try {
+        public PositionViewModel Update(PositionViewModel positionViewModel, string loginUserId)
+        {
+            try
+            {
                 PositionEntity positionEntity = _unitOfWork.PositoryRepository.GetBy(w => w.IsActive && w.Id == positionViewModel.Id).SingleOrDefault();
-                if (positionEntity is not null) {
+                if (positionEntity is not null)
+                {
                     positionEntity.Description = positionViewModel.Description;
                     positionEntity.Level = positionViewModel.Level;
-                    positionEntity.UpdatedBy = "system";
+                    positionEntity.UpdatedBy = loginUserId;
                     positionEntity.UpdatedAt = DateTime.Now;
                     positionEntity.Ip = NetworkHelper.GetIpAddress();
                 }
@@ -85,7 +103,8 @@ namespace CloudHRMS.Services {
                 _unitOfWork.Commit();
                 return positionViewModel;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 _unitOfWork.Rollback();
                 throw;
             }

@@ -4,21 +4,28 @@ using CloudHRMS.Models.ViewModels;
 using CloudHRMS.UnitOfWorks;
 using CloudHRMS.Utlitity;
 
-namespace CloudHRMS.Services {
-    public class EmployeeService : IEmployeeService {
+namespace CloudHRMS.Services
+{
+    public class EmployeeService : IEmployeeService
+    {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserService _userService;
-        public EmployeeService(IUnitOfWork unitOfWork, IUserService userService) {
+        public EmployeeService(IUnitOfWork unitOfWork, IUserService userService)
+        {
             this._unitOfWork = unitOfWork;
             this._userService = userService;
         }
 
-        public async Task Create(EmployeeViewModel employeeViewModel) {
-            try {
+        public async Task Create(EmployeeViewModel employeeViewModel, string loginUserId)
+        {
+            try
+            {
                 var userId = await _userService.CreateUserAsync(employeeViewModel.Email, "CloudHRMS@123", employeeViewModel.Email);
-                if (userId is not null) {
+                if (userId is not null)
+                {
                     //DTO >> data transfer object process in here .
-                    var employeeEntity = new EmployeeEntity() {
+                    var employeeEntity = new EmployeeEntity()
+                    {
                         Id = Guid.NewGuid().ToString(),//for primary key auto generation
                         Code = employeeViewModel.Code,
                         Name = employeeViewModel.Name,
@@ -34,7 +41,7 @@ namespace CloudHRMS.Services {
                         DepartmentId = employeeViewModel.DepartmentId,
                         //for audit purpose column
                         CreatedAt = DateTime.Now,
-                        CreatedBy = "system",
+                        CreatedBy = loginUserId,
                         IsActive = true,
                         Ip = NetworkHelper.GetIpAddress(),
                         UserId = userId
@@ -43,33 +50,40 @@ namespace CloudHRMS.Services {
                     _unitOfWork.Commit();
                 }
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 _unitOfWork.Rollback();
             }
         }
 
-        public bool Delete(string id) {
-            try {
+        public bool Delete(string id)
+        {
+            try
+            {
                 EmployeeEntity employee = _unitOfWork.EmployeeRepository.GetBy(w => w.IsActive && w.Id == id).SingleOrDefault();
-                if (employee is not null) {
+                if (employee is not null)
+                {
                     employee.IsActive = false;
                     _unitOfWork.EmployeeRepository.Update(employee);
                     _unitOfWork.Commit();
                     return true;
                 }
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 _unitOfWork.Rollback();
             }
             return false;
         }
 
-        public IEnumerable<EmployeeDetailModel> DetailBy(string fromCode, string toCode) {
+        public IEnumerable<EmployeeDetailModel> DetailBy(string fromCode, string toCode)
+        {
             return (from e in _unitOfWork.EmployeeRepository.GetAll(w => w.IsActive)
                     join p in _unitOfWork.PositoryRepository.GetAll(w => w.IsActive)
                     on e.PositionId equals p.Id
                     where e.Code.CompareTo(fromCode) >= 0 && e.Code.CompareTo(toCode) <= 0
-                    select new EmployeeDetailModel {
+                    select new EmployeeDetailModel
+                    {
                         Code = e.Code,
                         Name = e.Name,
                         Address = e.Address,
@@ -84,8 +98,9 @@ namespace CloudHRMS.Services {
                     });
         }
 
-        public async Task<IList<EmployeeViewModel>> GetAll(string userId) {
-            var roles = await _userService.GetRolesByUserIdAync(userId);
+        public async Task<IList<EmployeeViewModel>> GetAll(string loginUserId)
+        {
+            var roles = await _userService.GetRolesByUserIdAync(loginUserId);
             //DTO >> data transfer object process in here  (Data Model =>viewModel)
             IList<EmployeeViewModel> employees = (from e in _unitOfWork.EmployeeRepository.GetAll(w => w.IsActive)
                                                   join d in _unitOfWork.DepartmentRepository.GetAll(w => w.IsActive)
@@ -93,7 +108,8 @@ namespace CloudHRMS.Services {
                                                   join p in _unitOfWork.PositoryRepository.GetAll(w => w.IsActive)
                                                   on e.PositionId equals p.Id
                                                   where e.IsActive == true && p.IsActive == true && d.IsActive == true
-                                                  select new EmployeeViewModel() {
+                                                  select new EmployeeViewModel()
+                                                  {
                                                       Id = e.Id,//for delete and update porpose.
                                                       Code = e.Code,
                                                       Name = e.Name,
@@ -111,14 +127,17 @@ namespace CloudHRMS.Services {
                                                       PositionInfo = p.Code + "/" + p.Description,
                                                       UserId = e.UserId
                                                   }).ToList();
-            if (roles.Contains("EMPLOYEE")) {
-                employees = employees.Where(w => w.UserId == userId).ToList();
+            if (roles.Contains("EMPLOYEE"))
+            {
+                employees = employees.Where(w => w.UserId == loginUserId).ToList();
             }
             return employees;
         }
 
-        public EmployeeViewModel GetById(string id) {
-            return _unitOfWork.EmployeeRepository.GetBy(w => w.IsActive && w.Id == id).Select(s => new EmployeeViewModel() {
+        public EmployeeViewModel GetById(string id)
+        {
+            return _unitOfWork.EmployeeRepository.GetBy(w => w.IsActive && w.Id == id).Select(s => new EmployeeViewModel()
+            {
                 Id = s.Id,//for delete and update porpose.
                 Code = s.Code,
                 Name = s.Name,
@@ -135,10 +154,13 @@ namespace CloudHRMS.Services {
             }).SingleOrDefault();
         }
 
-        public void Update(EmployeeViewModel employeeViewModel) {
-            try {
+        public void Update(EmployeeViewModel employeeViewModel, string loginUserId)
+        {
+            try
+            {
                 EmployeeEntity employee = _unitOfWork.EmployeeRepository.GetBy(w => w.IsActive && w.Id == employeeViewModel.Id).SingleOrDefault();
-                if (employee is not null) {
+                if (employee is not null)
+                {
                     employee.Name = employeeViewModel.Name;
                     employee.Address = employeeViewModel.Address;
                     employee.BasicSalary = employeeViewModel.BasicSalary;
@@ -149,7 +171,7 @@ namespace CloudHRMS.Services {
                     employee.Gender = employeeViewModel.Gender;
                     //for audit purpose when update the recrod by the user.
                     employee.UpdatedAt = DateTime.Now;
-                    employee.UpdatedBy = "system";
+                    employee.UpdatedBy = loginUserId;
                     employee.Ip = NetworkHelper.GetIpAddress();
                     employee.DepartmentId = employeeViewModel.DepartmentId;
                     employee.PositionId = employeeViewModel.PositionId;
@@ -157,7 +179,8 @@ namespace CloudHRMS.Services {
                     _unitOfWork.Commit();
                 }
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 _unitOfWork.Rollback();
             }
         }

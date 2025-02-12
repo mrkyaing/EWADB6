@@ -1,7 +1,5 @@
 ﻿@model IList<CloudHRMS.Models.ViewModels.PositionViewModel>
-<head>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-</head>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 @if (TempData["Msg"] != null)
 {
     <div class="container mt-5">
@@ -12,42 +10,42 @@
         </div>
     </div>
 }
-<div class="container mt-5">
-    <h3 class="text-center mb-4 text-primary">Position List</h3>
-    <table class="table table-bordered table-hover table-striped" id="PositonTable">
-        <thead class="table-dark" >
-            <tr>
-                <th scope="col">No</th>
-                <th scope="col">Code</th>
-                <th scope="col">Description</th>
-                <th scope="col">Level</th>
-                @if (User.IsInRole("HR")){
-                    <th scope="col">Actions</th>
-                }
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
+<h3 class="text-center mb-4 text-primary">Position List</h3>
+<table class="table table-bordered table-hover table-striped" id="PositonTable">
+    <thead class="table-dark">
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">Code</th>
+            <th scope="col">Description</th>
+            <th scope="col">Level</th>
+            @if (User.IsInRole("HR"))
             {
-                <tr>
-                    <th scope="row">@(Model.IndexOf(item) + 1)</th>
-                    <td>@item.Code</td>
-                    <td>@item.Description</td>
-                    <td>@item.Level</td>
-                    @if (User.IsInRole("HR")){
-                        <td>
-                            <a href="/position/edit?id=@item.Id" role="button" class="btn btn-primary btn-sm me-2">Edit</a>
-                            <a href="/position/deletebyid?id=@item.Id" role="button" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete this record?')">Delete</a>
-                        </td>
-                    }
-                </tr>
+                <th scope="col">Actions</th>
             }
-        </tbody>
-    </table>
-</div>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@(Model.IndexOf(item) + 1)</th>
+                <td>@item.Code</td>
+                <td>@item.Description</td>
+                <td>@item.Level</td>
+                @if (User.IsInRole("HR"))
+                {
+                    <td>
+                        <a href="/position/edit?id=@item.Id" role="button" class="btn btn-primary btn-sm me-2">Edit</a>
+                        <a href="/position/deletebyid?id=@item.Id" role="button" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Are you sure to delete this record?')">Delete</a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
 <script>
-        $(document).ready( function () {
+    $(document).ready(function () {
         $('#PositonTable').DataTable();
-    } );
+    });
 </script>

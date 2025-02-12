@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-namespace CloudHRMS.Models.DataModels {
-    public abstract class BaseEntity {
+namespace CloudHRMS.Models.DataModels
+{
+    public abstract class BaseEntity
+    {
         [Key] //Model Attribute in MVC
         [MaxLength(36)]
         public required string Id { get; set; }//for Pramary Key in DB
