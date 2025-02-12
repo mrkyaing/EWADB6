@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="webthemez">
+    <title>Frames Corporate Bootstrap Free HTML5 Template</title>
+    <!-- core CSS -->
+    <link href="~/theme/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/theme/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/theme/css/animate.min.css" rel="stylesheet">
+    <link href="~/theme/css/prettyPhoto.css" rel="stylesheet">
+    <link href="~/theme/css/styles.css" rel="stylesheet">
+    <link rel="shortcut icon" href="~/theme/images/ico/favicon.ico">
+</head>
+
+<body id="home">
+
+    <header id="header">
+        <nav id="main-nav" class="navbar navbar-default navbar-fixed-top" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html"><img src="~/theme/images/logo.png" alt="logo"></a>
+                </div>
+
+                <div class="collapse navbar-collapse navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li class="scroll active"><a href="#home">Home</a></li>
+                        <li class="scroll"><a href="#products">Products</a></li>
+                        <li class="scroll"><a href="#services">Services</a></li>
+                        <li class="scroll"><a href="#about">About</a></li>
+                        <li class="scroll"><a href="#portfolio">Portfolio</a></li>
+                        <li class="scroll"><a href="#team">Team</a></li>
+                        <li class="scroll"><a href="#pricing">Pricing</a></li>
+                        <li class="scroll"><a href="#contact-us">Contact</a></li>
+                        <li class="scroll"><a href="/Identity/Account/Login">Login</a></li>
+                    </ul>
+                </div>
+            </div><!--/.container-->
+        </nav><!--/nav-->
+    </header><!--/header-->
+
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+
+    <footer id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    &copy; 2015 Company Name. Template by <a target="_blank" href="http://webthemez.com/"
+                                                             title="Free Bootstrap Themes and HTML Templates">WebThemez.com</a>
+                </div>
+                <div class="col-sm-6">
+                    <ul class="social-icons">
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                        <li><a href="#"><i class="fa fa-github"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer><!--/#footer-->
+
+    <script src="~/theme/js/jquery.js"></script>
+    <script src="~/theme/js/bootstrap.min.js"></script>
+    <script src="~/theme/js/mousescroll.js"></script>
+    <script src="~/theme/js/smoothscroll.js"></script>
+    <script src="~/theme/js/jquery.prettyPhoto.js"></script>
+    <script src="~/theme/js/jquery.isotope.min.js"></script>
+    <script src="~/theme/js/jquery.inview.min.js"></script>
+    <script src="~/theme/js/wow.min.js"></script>
+    <script src="~/theme/js/custom-scripts.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
