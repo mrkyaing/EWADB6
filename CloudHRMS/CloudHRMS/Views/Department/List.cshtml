@@ -16,7 +16,8 @@
             <th scope="col">Code</th>
             <th scope="col">Description</th>
             <th scope="col">ExtensionPhone</th>
-            @if(User.IsInRole("HR")){
+            @if (User.IsInRole("HR"))
+            {
                 <th scope="col">Actions</th>
             }
 
@@ -31,18 +32,21 @@
                 <td>@item.Code</td>
                 <td>@item.Description</td>
                 <td>@item.ExtensionPhone</td>
-               @if(User.IsInRole("HR")){
+                @if (User.IsInRole("HR"))
+                {
                     <td>
-                        <a href="/department/edit?id=@item.Id" role="button" class="btn btn-success"> Edit </a><!--/department/edit" --><!--/department/delete" -->
-                        <a href="/department/deletebyId?id=@item.Id" role="button" class="btn btn-danger" onclick="return confirm('Are you to delete this record')" ;> Delete </a>
+                        <a href="/department/edit?id=@item.Id" role="button" class="btn btn-success"> Edit
+                        </a><!--/department/edit" --><!--/department/delete" -->
+                        <a href="/department/deletebyId?id=@item.Id" role="button" class="btn btn-danger"
+                            onclick="return confirm('Are you to delete this record')" ;> Delete </a>
                     </td>
-               }
+                }
             </tr>
         }
     </tbody>
 </table>
 <script>
-        $(document).ready( function () {
+    $(document).ready(function () {
         $('#DepartmentTable').DataTable();
-    } );
+    });
 </script>
