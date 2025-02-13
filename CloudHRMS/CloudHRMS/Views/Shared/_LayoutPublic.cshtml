@@ -1,11 +1,12 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="webthemez">
-    <title>Frames Corporate Bootstrap Free HTML5 Template</title>
+    <title>ProDev : Cloud HRMS</title>
     <!-- core CSS -->
     <link href="~/theme/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/theme/css/font-awesome.min.css" rel="stylesheet">
@@ -27,7 +28,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html"><img src="~/theme/images/logo.png" alt="logo"></a>
+                    <a class="navbar-brand" href="/home/index">Cloud HRMS</a>
                 </div>
 
                 <div class="collapse navbar-collapse navbar-right">
@@ -38,7 +39,6 @@
                         <li class="scroll"><a href="#about">About</a></li>
                         <li class="scroll"><a href="#portfolio">Portfolio</a></li>
                         <li class="scroll"><a href="#team">Team</a></li>
-                        <li class="scroll"><a href="#pricing">Pricing</a></li>
                         <li class="scroll"><a href="#contact-us">Contact</a></li>
                         <li class="scroll"><a href="/Identity/Account/Login">Login</a></li>
                     </ul>
@@ -55,8 +55,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
-                    &copy; 2015 Company Name. Template by <a target="_blank" href="http://webthemez.com/"
-                                                             title="Free Bootstrap Themes and HTML Templates">WebThemez.com</a>
+                    &copy; @DateTime.Now.Year ProDev <a target="_blank" href="http://webthemez.com/"
+                        title="Free Bootstrap Themes and HTML Templates">WebThemez.com</a>
                 </div>
                 <div class="col-sm-6">
                     <ul class="social-icons">
@@ -71,7 +71,6 @@
             </div>
         </div>
     </footer><!--/#footer-->
-
     <script src="~/theme/js/jquery.js"></script>
     <script src="~/theme/js/bootstrap.min.js"></script>
     <script src="~/theme/js/mousescroll.js"></script>
@@ -83,4 +82,5 @@
     <script src="~/theme/js/custom-scripts.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

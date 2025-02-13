@@ -1,7 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    // Retrieve chart data passed from the controller
+    var chartData = ViewData["chartData"] as dynamic;
+    var labels = chartData?.Labels ?? new string[] { };
+    var data = chartData?.Data ?? new decimal[] { };
 }
-@if (User.IsInRole("HR") )
+@if (User.IsInRole("HR"))
 {
     <div class="app-content">
         <!--begin::Container-->
@@ -12,35 +16,23 @@
                     <div class="card mb-4">
                         <div class="card-header border-0">
                             <div class="d-flex justify-content-between">
-                                <h3 class="card-title">Online Store Visitors</h3>
-                                <a href="javascript:void(0);"
-                                   class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">View Report</a>
+                                <h3 class="card-title">
+                                    <a href="/payroll/list"
+                                        class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Payroll
+                                        History</a>
+                                </h3>
+                                <select class="form-select form-select-sm" id="selMonths"></select>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="d-flex">
-                                <p class="d-flex flex-column">
-                                    <span class="fw-bold fs-5">820</span> <span>Visitors Over Time</span>
-                                </p>
-                                <p class="ms-auto d-flex flex-column text-end">
-                                    <span class="text-success"> <i class="bi bi-arrow-up"></i> 12.5% </span>
-                                    <span class="text-secondary">Since last week</span>
-                                </p>
-                            </div>
-                            <!-- /.d-flex -->
-                            <div class="position-relative mb-4"><div id="visitors-chart"></div></div>
-                            <div class="d-flex flex-row justify-content-end">
-                                <span class="me-2">
-                                    <i class="bi bi-square-fill text-primary"></i> This Week
-                                </span>
-                                <span> <i class="bi bi-square-fill text-secondary"></i> Last Week </span>
+                            <div class="position-relative mb-4">
+                                <canvas id="payrollChart" style="max-width: 500px; max-height: 500px;"></canvas>
                             </div>
                         </div>
                     </div>
-                    <!-- /.card -->
                     <div class="card mb-4">
                         <div class="card-header border-0">
-                            <h3 class="card-title">Products</h3>
+                            <h3 class="card-title">New Staff</h3>
                             <div class="card-tools">
                                 <a href="#" class="btn btn-tool btn-sm"> <i class="bi bi-download"></i> </a>
                                 <a href="#" class="btn btn-tool btn-sm"> <i class="bi bi-list"></i> </a>
@@ -50,27 +42,22 @@
                             <table class="table table-striped align-middle">
                                 <thead>
                                     <tr>
-                                        <th>Product</th>
-                                        <th>Price</th>
-                                        <th>Sales</th>
-                                        <th>More</th>
+                                        <th>Staff</th>
+                                        <th>Position</th>
+                                        <th>DOE</th>
+                                        <th>Details</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <img src="../../dist/assets/img/default-150x150.png"
-                                                 alt="Product 1"
-                                                 class="rounded-circle img-size-32 me-2" />
-                                            Some Product
+                                            <img src="~/theme/images/pic2.jpg" alt="MG MG "
+                                                class="rounded-circle img-size-32 me-2" />
+                                            MG
                                         </td>
-                                        <td>$13 USD</td>
+                                        <td>PROGRAMMER</td>
                                         <td>
-                                            <small class="text-success me-1">
-                                                <i class="bi bi-arrow-up"></i>
-                                                12%
-                                            </small>
-                                            12,000 Sold
+                                            1-1-2024
                                         </td>
                                         <td>
                                             <a href="#" class="text-secondary"> <i class="bi bi-search"></i> </a>
@@ -78,57 +65,13 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <img src="../../dist/assets/img/default-150x150.png"
-                                                 alt="Product 1"
-                                                 class="rounded-circle img-size-32 me-2" />
-                                            Another Product
+                                            <img src="~/theme/images/pic1.jpg" alt="SU SU"
+                                                class="rounded-circle img-size-32 me-2" />
+                                            SU SU
                                         </td>
-                                        <td>$29 USD</td>
+                                        <td>DBA</td>
                                         <td>
-                                            <small class="text-info me-1">
-                                                <i class="bi bi-arrow-down"></i>
-                                                0.5%
-                                            </small>
-                                            123,234 Sold
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-secondary"> <i class="bi bi-search"></i> </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <img src="../../dist/assets/img/default-150x150.png"
-                                                 alt="Product 1"
-                                                 class="rounded-circle img-size-32 me-2" />
-                                            Amazing Product
-                                        </td>
-                                        <td>$1,230 USD</td>
-                                        <td>
-                                            <small class="text-danger me-1">
-                                                <i class="bi bi-arrow-down"></i>
-                                                3%
-                                            </small>
-                                            198 Sold
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-secondary"> <i class="bi bi-search"></i> </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <img src="../../dist/assets/img/default-150x150.png"
-                                                 alt="Product 1"
-                                                 class="rounded-circle img-size-32 me-2" />
-                                            Perfect Item
-                                            <span class="badge text-bg-danger">NEW</span>
-                                        </td>
-                                        <td>$199 USD</td>
-                                        <td>
-                                            <small class="text-success me-1">
-                                                <i class="bi bi-arrow-up"></i>
-                                                63%
-                                            </small>
-                                            87 Sold
+                                            1-1-2024
                                         </td>
                                         <td>
                                             <a href="#" class="text-secondary"> <i class="bi bi-search"></i> </a>
@@ -147,7 +90,8 @@
                             <div class="d-flex justify-content-between">
                                 <h3 class="card-title">Sales</h3>
                                 <a href="javascript:void(0);"
-                                   class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">View Report</a>
+                                    class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">View
+                                    Report</a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -161,7 +105,9 @@
                                 </p>
                             </div>
                             <!-- /.d-flex -->
-                            <div class="position-relative mb-4"><div id="sales-chart"></div></div>
+                            <div class="position-relative mb-4">
+                                <div id="sales-chart"></div>
+                            </div>
                             <div class="d-flex flex-row justify-content-end">
                                 <span class="me-2">
                                     <i class="bi bi-square-fill text-primary"></i> This year
@@ -182,16 +128,11 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
                                 <p class="text-success fs-2">
-                                    <svg height="32"
-                                         fill="none"
-                                         stroke="currentColor"
-                                         stroke-width="1.5"
-                                         viewBox="0 0 24 24"
-                                         xmlns="http://www.w3.org/2000/svg"
-                                         aria-hidden="true">
-                                        <path stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3"></path>
+                                    <svg height="32" fill="none" stroke="currentColor" stroke-width="1.5"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3">
+                                        </path>
                                     </svg>
                                 </p>
                                 <p class="d-flex flex-column text-end">
@@ -204,16 +145,11 @@
                             <!-- /.d-flex -->
                             <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
                                 <p class="text-info fs-2">
-                                    <svg height="32"
-                                         fill="none"
-                                         stroke="currentColor"
-                                         stroke-width="1.5"
-                                         viewBox="0 0 24 24"
-                                         xmlns="http://www.w3.org/2000/svg"
-                                         aria-hidden="true">
-                                        <path stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"></path>
+                                    <svg height="32" fill="none" stroke="currentColor" stroke-width="1.5"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z">
+                                        </path>
                                     </svg>
                                 </p>
                                 <p class="d-flex flex-column text-end">
@@ -226,16 +162,11 @@
                             <!-- /.d-flex -->
                             <div class="d-flex justify-content-between align-items-center mb-0">
                                 <p class="text-danger fs-2">
-                                    <svg height="32"
-                                         fill="none"
-                                         stroke="currentColor"
-                                         stroke-width="1.5"
-                                         viewBox="0 0 24 24"
-                                         xmlns="http://www.w3.org/2000/svg"
-                                         aria-hidden="true">
-                                        <path stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"></path>
+                                    <svg height="32" fill="none" stroke="currentColor" stroke-width="1.5"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z">
+                                        </path>
                                     </svg>
                                 </p>
                                 <p class="d-flex flex-column text-end">
@@ -256,6 +187,53 @@
         </div>
         <!--end::Container-->
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const months = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        const select = document.getElementById("selMonths");
+        months.forEach(month => {
+            let option = document.createElement("option");
+            option.value = month.toLowerCase();
+            option.textContent = month;
+            select.appendChild(option);
+        });
+        var ctx = document.getElementById('payrollChart').getContext('2d');
+        var payrollChart = new Chart(ctx, {
+            type: 'bar',  // Bar chart
+            data: {
+                labels: @Html.Raw(Json.Serialize(labels)),  // Week ranges (X-axis)
+                datasets: [{
+                    label: 'Total Payroll',
+                    data: @Html.Raw(Json.Serialize(data)),  // Payroll amount for each week (Y-axis)
+                    backgroundColor: 'blue',  // Deep bright teal background
+                    borderColor: 'green',  // Solid teal border
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false, // Hide the entire legend
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,  // Ensure the Y-axis starts from zero
+                        ticks: {
+                            callback: function (value, index, values) {
+                                return value.toFixed(0);  // Format as integer (remove decimals)
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 }
 else if (User.IsInRole("EMPLOYEE"))
 {
@@ -270,8 +248,8 @@ else
                 <div class="row">
                     <div class="col-sm-6">
 
-                        <h2>Super Awesome Corporate Business</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et  dolore.</p>
+                        <h2>Cloud HRMS</h2>
+                        <p>This is Cloud HRMS.</p>
                         <a class="btn btn-primary btn-lg" href="#">Learn More</a>
 
                     </div>
@@ -285,13 +263,20 @@ else
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title wow fadeInDown">Our Product</h2>
-                <p class="wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa <br> semper aliquam quis mattis quam.</p>
+                <p class="wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae
+                    massa <br> semper aliquam quis mattis quam.</p>
             </div>
 
             <div class="row">
                 <div class="col-md-6 wp1 animated fadeInUp">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa semper aliquam quis mattis quam. Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa semper aliquam quis mattis quam. Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa semper aliquam quis mattis quam. Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa semper
+                        aliquam quis mattis quam. Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut
+                        euismod massa, eu eleifend ipsum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
+                        eget risus vitae massa semper aliquam quis mattis quam. Morbi vitae tortor tempus, placerat leo et,
+                        suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa semper
+                        aliquam quis mattis quam. Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut
+                        euismod massa, eu eleifend ipsum.</p>
                     <a href="#" class="download-btn">Download Now</a>
                 </div>
                 <div class="col-md-6">
@@ -305,7 +290,8 @@ else
 
                                     <div class="media-body">
                                         <h4 class="media-heading">Mobile App</h4>
-                                        <p>Backed by some of the biggest names in the industry, Firefox OS is an open platform that fosters greater</p>
+                                        <p>Backed by some of the biggest names in the industry, Firefox OS is an open
+                                            platform that fosters greater</p>
                                     </div>
                                 </div>
                             </div><!--/.col-md-4-->
@@ -318,7 +304,8 @@ else
 
                                     <div class="media-body">
                                         <h4 class="media-heading">Custom App</h4>
-                                        <p>Backed by some of the biggest names in the industry, Firefox OS is an open platform that fosters greater</p>
+                                        <p>Backed by some of the biggest names in the industry, Firefox OS is an open
+                                            platform that fosters greater</p>
                                     </div>
                                 </div>
                             </div><!--/.col-md-4-->
@@ -331,7 +318,8 @@ else
 
                                     <div class="media-body">
                                         <h4 class="media-heading">E-Commerce</h4>
-                                        <p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
+                                        <p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod
+                                            massa, eu eleifend ipsum.</p>
                                     </div>
                                 </div>
                             </div><!--/.col-md-4-->
@@ -343,7 +331,8 @@ else
                                 <div class="media service-box">
                                     <div class="media-body">
                                         <h4 class="media-heading">CMS App</h4>
-                                        <p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
+                                        <p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod
+                                            massa, eu eleifend ipsum.</p>
                                     </div>
                                 </div>
                             </div><!--/.col-md-4-->
@@ -359,7 +348,7 @@ else
 
             <div class="section-header">
                 <h2 class="section-title wow fadeInDown">Our Services</h2>
-                <p class="wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa <br> semper aliquam quis mattis quam.</p>
+                <p class="wow fadeInDown">Cloud HRMS.</p>
             </div>
 
             <div class="row">
@@ -371,7 +360,8 @@ else
                             </div>
                             <div class="media-body">
                                 <h4 class="media-heading">Mobile App</h4>
-                                <p>Backed by some of the biggest names in the industry, Firefox OS is an open platform that fosters greater</p>
+                                <p>Backed by some of the biggest names in the industry, Firefox OS is an open platform that
+                                    fosters greater</p>
                             </div>
                         </div>
                     </div><!--/.col-md-4-->
@@ -383,7 +373,8 @@ else
                             </div>
                             <div class="media-body">
                                 <h4 class="media-heading">Custom App</h4>
-                                <p>Backed by some of the biggest names in the industry, Firefox OS is an open platform that fosters greater</p>
+                                <p>Backed by some of the biggest names in the industry, Firefox OS is an open platform that
+                                    fosters greater</p>
                             </div>
                         </div>
                     </div><!--/.col-md-4-->
@@ -395,7 +386,8 @@ else
                             </div>
                             <div class="media-body">
                                 <h4 class="media-heading">E-Commerce</h4>
-                                <p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
+                                <p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa,
+                                    eu eleifend ipsum.</p>
                             </div>
                         </div>
                     </div><!--/.col-md-4-->
@@ -407,7 +399,8 @@ else
                             </div>
                             <div class="media-body">
                                 <h4 class="media-heading">CMS App</h4>
-                                <p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
+                                <p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa,
+                                    eu eleifend ipsum.</p>
                             </div>
                         </div>
                     </div><!--/.col-md-4-->
@@ -419,7 +412,8 @@ else
                             </div>
                             <div class="media-body">
                                 <h4 class="media-heading">Product Dev</h4>
-                                <p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
+                                <p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa,
+                                    eu eleifend ipsum.</p>
                             </div>
                         </div>
                     </div><!--/.col-md-4-->
@@ -431,7 +425,8 @@ else
                             </div>
                             <div class="media-body">
                                 <h4 class="media-heading">SharePoint</h4>
-                                <p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
+                                <p>Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa,
+                                    eu eleifend ipsum.</p>
                             </div>
                         </div>
                     </div><!--/.col-md-4-->
@@ -447,7 +442,7 @@ else
 
             <div class="section-header">
                 <h2 class="section-title wow fadeInDown">About Us</h2>
-                <p class="wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa <br> semper aliquam quis mattis quam.</p>
+                <p class="wow fadeInDown">We are ProDev (Professtional Development Center)</p>
             </div>
 
             <div class="row">
@@ -457,11 +452,16 @@ else
 
                 <div class="col-sm-6 wow fadeInRight">
                     <h3 class="column-title">Our Company</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa semper aliquam quis mattis quam. Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut euismod massa, eu eleifend ipsum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa semper
+                        aliquam quis mattis quam. Morbi vitae tortor tempus, placerat leo et, suscipit lectus. Phasellus ut
+                        euismod massa, eu eleifend ipsum.</p>
 
-                    <p>Nulla eu neque commodo, dapibus dolor eget, dictum arcu. In nec purus eu tellus consequat ultricies. Donec feugiat tempor turpis, rutrum sagittis mi venenatis at. Sed molestie lorem a blandit congue. Ut pellentesque odio quis leo volutpat, vitae vulputate felis condimentum. </p>
+                    <p>Nulla eu neque commodo, dapibus dolor eget, dictum arcu. In nec purus eu tellus consequat ultricies.
+                        Donec feugiat tempor turpis, rutrum sagittis mi venenatis at. Sed molestie lorem a blandit congue.
+                        Ut pellentesque odio quis leo volutpat, vitae vulputate felis condimentum. </p>
 
-                    <p>Praesent vulputate fermentum lorem, id rhoncus sem vehicula eu. Quisque ullamcorper, orci adipiscing auctor viverra, velit arcu malesuada metus, in volutpat tellus sem at justo.</p>
+                    <p>Praesent vulputate fermentum lorem, id rhoncus sem vehicula eu. Quisque ullamcorper, orci adipiscing
+                        auctor viverra, velit arcu malesuada metus, in volutpat tellus sem at justo.</p>
 
 
                     <a class="btn btn-primary" href="#">Learn More</a>
@@ -478,7 +478,8 @@ else
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title wow fadeInDown">Our Works</h2>
-                <p class="wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa <br> semper aliquam quis mattis quam.</p>
+                <p class="wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae
+                    massa <br> semper aliquam quis mattis quam.</p>
             </div>
 
             <div class="text-center">
@@ -493,11 +494,12 @@ else
             <div class="portfolio-items">
                 <div class="portfolio-item designing">
                     <div class="portfolio-item-inner">
-                        <img class="img-responsive" src="images/portfolio/01.jpg" alt="">
+                        <img class="img-responsive" src="~/theme/images/portfolio/01.jpg" alt="">
                         <div class="portfolio-info">
                             <h3>Project Name</h3>
                             Some description..
-                            <a class="preview" href="images/portfolio/01.jpg" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                            <a class="preview" href="~/theme/images/portfolio/01.jpg" rel="prettyPhoto"><i
+                                    class="fa fa-eye"></i></a>
                         </div>
                         <h4>Lorem Ipsum</h4>
                     </div>
@@ -505,11 +507,12 @@ else
 
                 <div class="portfolio-item mobile development">
                     <div class="portfolio-item-inner">
-                        <img class="img-responsive" src="images/portfolio/02.jpg" alt="">
+                        <img class="img-responsive" src="~/theme/images/portfolio/02.jpg" alt="">
                         <div class="portfolio-info">
                             <h3>Project Name</h3>
                             Some description..
-                            <a class="preview" href="images/portfolio/02.jpg" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                            <a class="preview" href="~/theme/images/portfolio/02.jpg" rel="prettyPhoto"><i
+                                    class="fa fa-eye"></i></a>
                         </div>
                         <h4>Lorem Ipsum</h4>
                     </div>
@@ -517,11 +520,12 @@ else
 
                 <div class="portfolio-item designing">
                     <div class="portfolio-item-inner">
-                        <img class="img-responsive" src="images/portfolio/03.jpg" alt="">
+                        <img class="img-responsive" src="~/theme/images/portfolio/03.jpg" alt="">
                         <div class="portfolio-info">
                             <h3>Project Name</h3>
                             Some description..
-                            <a class="preview" href="images/portfolio/03.jpg" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                            <a class="preview" href="~/theme/images/portfolio/03.jpg" rel="prettyPhoto"><i
+                                    class="fa fa-eye"></i></a>
                         </div>
                         <h4>Lorem Ipsum</h4>
                     </div>
@@ -529,11 +533,12 @@ else
 
                 <div class="portfolio-item mobile">
                     <div class="portfolio-item-inner">
-                        <img class="img-responsive" src="images/portfolio/04.jpg" alt="">
+                        <img class="img-responsive" src="~/theme/images/portfolio/04.jpg" alt="">
                         <div class="portfolio-info">
                             <h3>Project Name</h3>
                             Some description..
-                            <a class="preview" href="images/portfolio/04.jpg" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                            <a class="preview" href="~/theme/images/portfolio/04.jpg" rel="prettyPhoto"><i
+                                    class="fa fa-eye"></i></a>
                         </div>
                         <h4>Lorem Ipsum</h4>
                     </div>
@@ -541,11 +546,12 @@ else
 
                 <div class="portfolio-item designing development">
                     <div class="portfolio-item-inner">
-                        <img class="img-responsive" src="images/portfolio/05.jpg" alt="">
+                        <img class="img-responsive" src="~/theme/images/portfolio/05.jpg" alt="">
                         <div class="portfolio-info">
                             <h3>Project Name</h3>
                             Some description..
-                            <a class="preview" href="images/portfolio/05.jpg" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                            <a class="preview" href="~/theme/images/portfolio/05.jpg" rel="prettyPhoto"><i
+                                    class="fa fa-eye"></i></a>
                         </div>
                         <h4>Lorem Ipsum</h4>
                     </div>
@@ -553,11 +559,12 @@ else
 
                 <div class="portfolio-item mobile">
                     <div class="portfolio-item-inner">
-                        <img class="img-responsive" src="images/portfolio/06.jpg" alt="">
+                        <img class="img-responsive" src="~/theme/images/portfolio/06.jpg" alt="">
                         <div class="portfolio-info">
                             <h3>Project Name</h3>
                             Some description..
-                            <a class="preview" href="images/portfolio/06.jpg" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                            <a class="preview" href="~/theme/images/portfolio/06.jpg" rel="prettyPhoto"><i
+                                    class="fa fa-eye"></i></a>
                         </div>
                         <h4>Lorem Ipsum</h4>
                     </div>
@@ -565,11 +572,12 @@ else
 
                 <div class="portfolio-item designing development">
                     <div class="portfolio-item-inner">
-                        <img class="img-responsive" src="images/portfolio/07.jpg" alt="">
+                        <img class="img-responsive" src="~/theme/images/portfolio/07.jpg" alt="">
                         <div class="portfolio-info">
                             <h3>Project Name</h3>
                             Some description..
-                            <a class="preview" href="images/portfolio/07.jpg" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                            <a class="preview" href="~/theme/images/portfolio/07.jpg" rel="prettyPhoto"><i
+                                    class="fa fa-eye"></i></a>
                         </div>
                         <h4>Lorem Ipsum</h4>
                     </div>
@@ -577,11 +585,12 @@ else
 
                 <div class="portfolio-item mobile">
                     <div class="portfolio-item-inner">
-                        <img class="img-responsive" src="images/portfolio/08.jpg" alt="">
+                        <img class="img-responsive" src="~/theme/images/portfolio/08.jpg" alt="">
                         <div class="portfolio-info">
                             <h3>Project Name</h3>
                             Some description..
-                            <a class="preview" href="images/portfolio/08.jpg" rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                            <a class="preview" href="~/theme/images/portfolio/08.jpg" rel="prettyPhoto"><i
+                                    class="fa fa-eye"></i></a>
                         </div>
                         <h4>Lorem Ipsum</h4>
                     </div>
@@ -596,13 +605,14 @@ else
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title wow fadeInDown">Our Team</h2>
-                <p class="wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa <br> semper aliquam quis mattis quam.</p>
+                <p class="wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae
+                    massa <br> semper aliquam quis mattis quam.</p>
             </div>
             <div class="row" data-anim-type="fade-in-up">
 
                 <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
                     <div class="team-wrapper">
-                        <div class="team-inner" style="background-image: url('images/team/01.jpg')">
+                        <div class="team-inner" style="background-image: url('~/theme/images/team/01.jpg')">
                             <a href="#" target="_blank"> <i class="fa fa-twitter"></i></a>
                         </div>
                         <div class="description">
@@ -617,7 +627,7 @@ else
                 </div>
                 <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
                     <div class="team-wrapper">
-                        <div class="team-inner" style="background-image: url('images/team/02.jpg')">
+                        <div class="team-inner" style="background-image: url('~/theme/images/team/02.jpg')">
                             <a href="#" target="_blank"> <i class="fa fa-twitter"></i></a>
                         </div>
                         <div class="description">
@@ -632,7 +642,7 @@ else
                 </div>
                 <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
                     <div class="team-wrapper">
-                        <div class="team-inner" style="background-image: url('images/team/03.jpg')">
+                        <div class="team-inner" style="background-image: url('~/theme/images/team/03.jpg')">
                             <a href="#" target="_blank"> <i class="fa fa-twitter"></i></a>
                         </div>
                         <div class="description">
@@ -647,7 +657,7 @@ else
                 </div>
                 <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
                     <div class="team-wrapper">
-                        <div class="team-inner" style="background-image: url('images/team/04.jpg')">
+                        <div class="team-inner" style="background-image: url('~/theme/images/team/04.jpg')">
                             <a href="#" target="_blank"> <i class="fa fa-twitter"></i></a>
                         </div>
                         <div class="description">
@@ -667,7 +677,8 @@ else
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title wow fadeInDown">Business Stats</h2>
-                <p class="wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa <br> semper aliquam quis mattis quam.</p>
+                <p class="wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae
+                    massa <br> semper aliquam quis mattis quam.</p>
             </div>
 
             <div class="row text-center">
@@ -698,143 +709,21 @@ else
             </div>
         </div>
     </section>
-
     <!--/#business-stats-->
-
-    <section id="pricing">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title wow fadeInDown">Pricing</h2>
-                <p class="wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa <br> semper aliquam quis mattis quam.</p>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="wow zoomIn" data-wow-duration="400ms" data-wow-delay="0ms">
-                        <ul class="pricing">
-                            <li class="plan-header">
-                                <div class="price-duration">
-                                    <span class="price">
-                                        $45
-                                    </span>
-                                    <span class="duration">
-                                        per month
-                                    </span>
-                                </div>
-
-                                <div class="plan-name">
-                                    Basic
-                                </div>
-                            </li>
-                            <li><strong>1</strong> DOMAIN</li>
-                            <li><strong>100GB</strong> DISK SPACE</li>
-                            <li><strong>UNLIMITED</strong> BANDWIDTH</li>
-                            <li>SHARED SSL CERTIFICATE</li>
-                            <li><strong>10</strong> EMAIL ADDRESS</li>
-                            <li><strong>24/7</strong> SUPPORT</li>
-                            <li class="plan-purchase"><a class="btn btn-primary" href="#">Get It Now!</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="wow zoomIn" data-wow-duration="400ms" data-wow-delay="200ms">
-                        <ul class="pricing featured">
-                            <li class="plan-header">
-                                <div class="price-duration">
-                                    <span class="price">
-                                        $85
-                                    </span>
-                                    <span class="duration">
-                                        per month
-                                    </span>
-                                </div>
-
-                                <div class="plan-name">
-                                    Business
-                                </div>
-                            </li>
-                            <li><strong>5</strong> DOMAIN</li>
-                            <li><strong>500GB</strong> DISK SPACE</li>
-                            <li><strong>UNLIMITED</strong> BANDWIDTH</li>
-                            <li>SHARED SSL CERTIFICATE</li>
-                            <li><strong>30</strong> EMAIL ADDRESS</li>
-                            <li><strong>24/7</strong> SUPPORT</li>
-                            <li class="plan-purchase"><a class="btn btn-primary" href="#">Get It Now!</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="wow zoomIn" data-wow-duration="400ms" data-wow-delay="400ms">
-                        <ul class="pricing">
-                            <li class="plan-header">
-                                <div class="price-duration">
-                                    <span class="price">
-                                        $125
-                                    </span>
-                                    <span class="duration">
-                                        per month
-                                    </span>
-                                </div>
-
-                                <div class="plan-name">
-                                    Professional
-                                </div>
-                            </li>
-                            <li><strong>10</strong> DOMAIN</li>
-                            <li><strong>2GB</strong> DISK SPACE</li>
-                            <li><strong>UNLIMITED</strong> BANDWIDTH</li>
-                            <li>SHARED SSL CERTIFICATE</li>
-                            <li><strong>50</strong> EMAIL ADDRESS</li>
-                            <li><strong>24/7</strong> SUPPORT</li>
-                            <li class="plan-purchase"><a class="btn btn-primary" href="#">Get It Now!</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="wow zoomIn" data-wow-duration="400ms" data-wow-delay="600ms">
-                        <ul class="pricing">
-                            <li class="plan-header">
-                                <div class="price-duration">
-                                    <span class="price">
-                                        $185
-                                    </span>
-                                    <span class="duration">
-                                        per month
-                                    </span>
-                                </div>
-
-                                <div class="plan-name">
-                                    Extended
-                                </div>
-                            </li>
-                            <li><strong>15</strong> DOMAIN</li>
-                            <li><strong>10GB</strong> DISK SPACE</li>
-                            <li><strong>UNLIMITED</strong> BANDWIDTH</li>
-                            <li>SHARED SSL CERTIFICATE</li>
-                            <li><strong>100</strong> EMAIL ADDRESS</li>
-                            <li><strong>24/7</strong> SUPPORT</li>
-                            <li class="plan-purchase"><a class="btn btn-primary" href="#">Get It Now!</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!--/#pricing-->
-
     <section class="testimonial-area" id="testimonial">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title wow fadeInDown">Testimonial</h2>
-                <p class="wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa <br> semper aliquam quis mattis quam.</p>
+                <p class="wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae
+                    massa <br> semper aliquam quis mattis quam.</p>
             </div>
             <div class="row">
                 <div class="col-md-4">
                     <div class="single-testimonial animate_fade_in" style="opacity: 1; right: 0px;">
                         <div class="row">
                             <div class="col-xs-12">
-                                <blockquote>Sontrary to popular belief, Lorem Ipsuis no simply random text. It has roots in a piece of classical Layears old. belief, Lorem Ipsuis not simply</blockquote>
+                                <blockquote>Sontrary to popular belief, Lorem Ipsuis no simply random text. It has roots in
+                                    a piece of classical Layears old. belief, Lorem Ipsuis not simply</blockquote>
                             </div>
                         </div>
                         <div class="row">
@@ -849,7 +738,8 @@ else
                     <div class="single-testimonial animate_fade_in" style="opacity: 1; right: 0px;">
                         <div class="row">
                             <div class="col-xs-12">
-                                <blockquote>Tontrary to popular belief, Lorem Ipsuis no simply random text. It has roots in a piece of classical Layears old. belief, Lorem Ipsuis not simply</blockquote>
+                                <blockquote>Tontrary to popular belief, Lorem Ipsuis no simply random text. It has roots in
+                                    a piece of classical Layears old. belief, Lorem Ipsuis not simply</blockquote>
                             </div>
                         </div>
                         <div class="row">
@@ -864,7 +754,8 @@ else
                     <div class="single-testimonial animate_fade_in" style="opacity: 1; right: 0px;">
                         <div class="row">
                             <div class="col-xs-12">
-                                <blockquote>Aontrary to popular belief, Lorem Ipsuis no simply random text. It has roots in a piece of classical Layears old. belief, Lorem Ipsuis not simply</blockquote>
+                                <blockquote>Aontrary to popular belief, Lorem Ipsuis no simply random text. It has roots in
+                                    a piece of classical Layears old. belief, Lorem Ipsuis not simply</blockquote>
                             </div>
                         </div>
                         <div class="row">
@@ -882,7 +773,8 @@ else
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title wow fadeInDown">Contact Us</h2>
-                <p class="wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa <br> semper aliquam quis mattis quam.</p>
+                <p class="wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae
+                    massa <br> semper aliquam quis mattis quam.</p>
             </div>
         </div>
     </section>
@@ -900,10 +792,10 @@ else
                             <h3>Contact Info</h3>
 
                             <address>
-                                <strong>Amazing Company, Inc.</strong><br>
-                                12345 NewYork, Street 125<br>
-                                United States 94107<br>
-                                <abbr title="Phone">P:</abbr> (123) 456-7890
+                                <strong>ProDev MM,Co,LTD</strong><br>
+                                Ching Mai<br>
+                                Thailand,4107<br>
+                                <abbr title="Phone">P:</abbr>(+66)908 915 843
                             </address>
                         </div>
                     </div>
@@ -921,7 +813,8 @@ else
                                     <input type="text" name="subject" class="form-control" placeholder="Subject" required>
                                 </div>
                                 <div class="form-group">
-                                    <textarea name="message" class="form-control" rows="8" placeholder="Message" required></textarea>
+                                    <textarea name="message" class="form-control" rows="8" placeholder="Message"
+                                        required></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Send Message</button>
                             </form>
@@ -931,112 +824,5 @@ else
             </div>
         </div>
     </section>
-
     <!--/#bottom-->
 }
-<script>
-    const visitors_chart_options = {
-      series: [
-        {
-          name: 'High - 2023',
-          data: [100, 120, 170, 167, 180, 177, 160],
-        },
-        {
-          name: 'Low - 2023',
-          data: [60, 80, 70, 67, 80, 77, 100],
-        },
-      ],
-      chart: {
-        height: 200,
-        type: 'line',
-        toolbar: {
-          show: false,
-        },
-      },
-      colors: ['#0d6efd', '#adb5bd'],
-      stroke: {
-        curve: 'smooth',
-      },
-      grid: {
-        borderColor: '#e7e7e7',
-        row: {
-          colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-          opacity: 0.5,
-        },
-      },
-      legend: {
-        show: false,
-      },
-      markers: {
-        size: 1,
-      },
-      xaxis: {
-        categories: ['22th', '23th', '24th', '25th', '26th', '27th', '28th'],
-      },
-    };
-
-    const visitors_chart = new ApexCharts(
-      document.querySelector('#visitors-chart'),
-      visitors_chart_options,
-    );
-    visitors_chart.render();
-
-    const sales_chart_options = {
-      series: [
-        {
-          name: 'Net Profit',
-          data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
-        },
-        {
-          name: 'Revenue',
-          data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
-        },
-        {
-          name: 'Free Cash Flow',
-          data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
-        },
-      ],
-      chart: {
-        type: 'bar',
-        height: 200,
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '55%',
-          endingShape: 'rounded',
-        },
-      },
-      legend: {
-        show: false,
-      },
-      colors: ['#0d6efd', '#20c997', '#ffc107'],
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ['transparent'],
-      },
-      xaxis: {
-        categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
-      },
-      fill: {
-        opacity: 1,
-      },
-      tooltip: {
-        y: {
-          formatter: function (val) {
-            return '$ ' + val + ' thousands';
-          },
-        },
-      },
-    };
-
-    const sales_chart = new ApexCharts(
-      document.querySelector('#sales-chart'),
-      sales_chart_options,
-    );
-    sales_chart.render();
-</script>
