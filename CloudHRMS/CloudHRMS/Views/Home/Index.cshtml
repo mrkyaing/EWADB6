@@ -1,4 +1,5 @@
-﻿@{
+﻿@model CloudHRMS.Models.ViewModels.DashboardViewModel
+@{
     ViewData["Title"] = "Home Page";
     // Retrieve chart data passed from the controller
     var chartData = ViewData["chartData"] as dynamic;
@@ -32,54 +33,50 @@
                     </div>
                     <div class="card mb-4">
                         <div class="card-header border-0">
-                            <h3 class="card-title">New Staff</h3>
+                            <h3 class="card-title">New Staff in @DateTime.Now.ToString("MMMM") month.</h3>
                             <div class="card-tools">
                                 <a href="#" class="btn btn-tool btn-sm"> <i class="bi bi-download"></i> </a>
                                 <a href="#" class="btn btn-tool btn-sm"> <i class="bi bi-list"></i> </a>
                             </div>
                         </div>
-                        <div class="card-body table-responsive p-0">
-                            <table class="table table-striped align-middle">
-                                <thead>
-                                    <tr>
-                                        <th>Staff</th>
-                                        <th>Position</th>
-                                        <th>DOE</th>
-                                        <th>Details</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <img src="~/theme/images/pic2.jpg" alt="MG MG "
-                                                class="rounded-circle img-size-32 me-2" />
-                                            MG
-                                        </td>
-                                        <td>PROGRAMMER</td>
-                                        <td>
-                                            1-1-2024
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-secondary"> <i class="bi bi-search"></i> </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <img src="~/theme/images/pic1.jpg" alt="SU SU"
-                                                class="rounded-circle img-size-32 me-2" />
-                                            SU SU
-                                        </td>
-                                        <td>DBA</td>
-                                        <td>
-                                            1-1-2024
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-secondary"> <i class="bi bi-search"></i> </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        @if (Model.NewEmployeesOfCurrentMonth.Count() > 0)
+                        {
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-striped align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>Staff</th>
+                                            <th>Position</th>
+                                            <th>DOB</th>
+                                            <th>Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var e in Model.NewEmployeesOfCurrentMonth)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <img src="~/theme/images/pic2.jpg" alt="MG MG "
+                                                        class="rounded-circle img-size-32 me-2" />
+                                                    @e.Code/@e.Name
+                                                </td>
+                                                <td>@e.PositionInfo</td>
+                                                <td>
+                                                    @e.DOB.ToString("yyyy-MM-mm")
+                                                </td>
+                                                <td>
+                                                    <a href="/employee/list" class="text-secondary"> <i class="bi bi-search"></i> </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <h3>There is no new Staff in this month.</h3>
+                        }
                     </div>
                     <!-- /.card -->
                 </div>
@@ -780,8 +777,6 @@ else
     </section>
 
     <!--/#contact-us-->
-
-
     <section id="contact">
 
         <div class="container">

@@ -1,7 +1,11 @@
 using System.Diagnostics;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using CloudHRMS.Models;
+using CloudHRMS.Models.ViewModels;
 using CloudHRMS.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileSystemGlobbing.Internal.PathSegments;
 
 namespace CloudHRMS.Controllers
 {
@@ -9,15 +13,23 @@ namespace CloudHRMS.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IPayrollService _payrollService;
+        private readonly IEmployeeService _employeeService;
 
-        public HomeController(ILogger<HomeController> logger, IPayrollService payrollService)
+        public HomeController(ILogger<HomeController> logger, IPayrollService payrollService, IEmployeeService employeeService)
         {
             _logger = logger;
             this._payrollService = payrollService;
+            this._employeeService = employeeService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var loginUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);// will give the user's userId
+            var allEmployees = await _employeeService.GetAll(loginUserId);
+            var dashboardViewModel = new DashboardViewModel()
+            {
+                NewEmployeesOfCurrentMonth = allEmployees.Where(w => w.DOE.Month == DateTime.Now.Month)
+            };
             // Retrieve sales data from the database (or your data source)
             var payrolls = _payrollService.GetAll(); // Assuming your data source is '_context.Sales'
             // Group sales data by week and calculate total cash amount per week
@@ -37,7 +49,7 @@ namespace CloudHRMS.Controllers
             };
 
             ViewData["chartData"] = chartData; // Passing chartData to the view
-            return View();
+            return View(dashboardViewModel);
         }
 
         public IActionResult Privacy()
