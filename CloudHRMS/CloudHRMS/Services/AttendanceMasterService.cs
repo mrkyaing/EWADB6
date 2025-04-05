@@ -2,6 +2,7 @@
 using CloudHRMS.Models.ViewModels;
 using CloudHRMS.UnitOfWorks;
 using CloudHRMS.Utlitity;
+using System.Data;
 
 namespace CloudHRMS.Services {
     public class AttendanceMasterService : IAttendanceMasterService {
@@ -17,7 +18,7 @@ namespace CloudHRMS.Services {
                 //Data exchange from view model to data model by using automapper
                 List<AttendanceMasterEntity> attendanceMasters = new List<AttendanceMasterEntity>();
 
-                //get the daily atttendance accroding to assigned shift on that date 
+                //get the daily atttendance accroding to assigned shift on that date with LINQ query
                 var DailyAttendancesWithShiftAssignsData = (from da in _unitOfWork.DailyAttendanceRepository.GetAll(w => w.IsActive)
                                                             join sa in _unitOfWork.ShiftAssignRepository.GetAll(w => w.IsActive)
                                                             on da.EmployeeId equals sa.EmployeeId
@@ -27,6 +28,7 @@ namespace CloudHRMS.Services {
                                                                 dailyAttendance = da,
                                                                 shiftAssign = sa
                                                             }).ToList();
+                //or you can use Native Query (SQL)
 
                 // check  he/she IsLate, IsEarlyOut, IsLeave
                 foreach (var data in DailyAttendancesWithShiftAssignsData) {
