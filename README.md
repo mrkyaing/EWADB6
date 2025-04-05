@@ -27,3 +27,7 @@ https://www.epplussoftware.com/en/Developers/
 - Unit Test with xUnit
 - Version Control with Git
 - Azure Cloud & DevOps (Introduction to)
+
+# User Credentials (Admin Role)
+- User Name : admin@101.com
+- Password : smartHR@101
