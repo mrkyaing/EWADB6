@@ -3,9 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudHRMS", "CloudHRMS\CloudHRMS.csproj", "{2AA556FC-881F-4F54-A6D4-04857620E848}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudHRMS.Web", "CloudHRMS\CloudHRMS.Web.csproj", "{2AA556FC-881F-4F54-A6D4-04857620E848}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudHRMS.UnitTests", "CloudHRMS.UnitTests\CloudHRMS.UnitTests.csproj", "{C365F763-F7B3-4DEB-9D04-B294E3CE20ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudHRMS.WebAPIs", "CloudHRMS.WebAPIs\CloudHRMS.WebAPIs.csproj", "{533EF969-BBCC-4E19-A856-2B244D9F53C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudHRMS.Services", "CloudHRMS.Services\CloudHRMS.Services.csproj", "{951F434D-5FCB-4144-BC5B-A18F8C36ABCF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudHRMS.Repositories", "CloudHRMS.Repositories\CloudHRMS.Repositories.csproj", "{893AFA79-5B73-4C8A-9337-FE936134914B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudHRMS.UnitOfWorks", "CloudHRMS.UnitOfWorks\CloudHRMS.UnitOfWorks.csproj", "{BA8E0DA0-6CEF-4D56-9FE9-2AF6037764AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudHRMS.Domain", "CloudHRMS.Domain\CloudHRMS.Domain.csproj", "{5FAFD93A-D303-4FCF-808B-014BBFDACA3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +31,26 @@ Global
 		{C365F763-F7B3-4DEB-9D04-B294E3CE20ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C365F763-F7B3-4DEB-9D04-B294E3CE20ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C365F763-F7B3-4DEB-9D04-B294E3CE20ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{533EF969-BBCC-4E19-A856-2B244D9F53C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{533EF969-BBCC-4E19-A856-2B244D9F53C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{533EF969-BBCC-4E19-A856-2B244D9F53C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{533EF969-BBCC-4E19-A856-2B244D9F53C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{951F434D-5FCB-4144-BC5B-A18F8C36ABCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{951F434D-5FCB-4144-BC5B-A18F8C36ABCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{951F434D-5FCB-4144-BC5B-A18F8C36ABCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{951F434D-5FCB-4144-BC5B-A18F8C36ABCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{893AFA79-5B73-4C8A-9337-FE936134914B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{893AFA79-5B73-4C8A-9337-FE936134914B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{893AFA79-5B73-4C8A-9337-FE936134914B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{893AFA79-5B73-4C8A-9337-FE936134914B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA8E0DA0-6CEF-4D56-9FE9-2AF6037764AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA8E0DA0-6CEF-4D56-9FE9-2AF6037764AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA8E0DA0-6CEF-4D56-9FE9-2AF6037764AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA8E0DA0-6CEF-4D56-9FE9-2AF6037764AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FAFD93A-D303-4FCF-808B-014BBFDACA3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FAFD93A-D303-4FCF-808B-014BBFDACA3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FAFD93A-D303-4FCF-808B-014BBFDACA3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FAFD93A-D303-4FCF-808B-014BBFDACA3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
