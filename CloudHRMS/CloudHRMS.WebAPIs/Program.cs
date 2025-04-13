@@ -18,12 +18,11 @@ builder.Services.AddTransient<IUserService, UserService>();
 
 //configure for API versioning in .NET
 builder.Services.AddApiVersioning(options => {
+    // ** path : url , query string ,** header ,meida type
     options.DefaultApiVersion = new ApiVersion(1);
     options.ReportApiVersions = true;
     options.AssumeDefaultVersionWhenUnspecified = true;
-    options.ApiVersionReader = ApiVersionReader.Combine(
-        new UrlSegmentApiVersionReader(),
-        new HeaderApiVersionReader("X-Api-Version"));
+    options.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader(), new HeaderApiVersionReader("X-Api-Version"));
 })
 .AddMvc() // This is needed for controllers
 .AddApiExplorer(options => {
