@@ -1,7 +1,9 @@
-using Asp.Versioning;
+﻿using Asp.Versioning;
+using Asp.Versioning.ApiExplorer;
 using CloudHRMS.Domain.DAO;
 using CloudHRMS.Services;
 using CloudHRMS.UnitOfWorks;
+using CloudHRMS.WebAPIs.ConfigSwaggerOptions.CloudHRMS.WebAPIs.Configurations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,12 +34,21 @@ builder.Services.AddApiVersioning(options => {
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// ✅ Bind Swagger to versioning
+builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 var app = builder.Build();
-// Configure the HTTP request pipeline.
+var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+
 if (app.Environment.IsDevelopment()) {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options => {
+        foreach (var description in provider.ApiVersionDescriptions) {
+            options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
+                $"CloudHRMS API {description.GroupName.ToUpperInvariant()}");
+        }
+    });
 }
+
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
