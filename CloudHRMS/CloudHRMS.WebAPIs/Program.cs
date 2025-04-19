@@ -4,20 +4,41 @@ using CloudHRMS.Domain.DAO;
 using CloudHRMS.Services;
 using CloudHRMS.UnitOfWorks;
 using CloudHRMS.WebAPIs.ConfigSwaggerOptions.CloudHRMS.WebAPIs.Configurations;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 var config = builder.Configuration;
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<HRMSDbContext>();
+//Configure the database context and identity to check the user and role
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<HRMSDbContext>().AddDefaultTokenProviders();
 builder.Services.AddDbContext<HRMSDbContext>(o => o.UseSqlServer(config.GetConnectionString("CloudHRMSConnectionString")));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IEmployeeService, EmployeeService>();
 builder.Services.AddTransient<IDepartmentService, DepartmentService>();
 builder.Services.AddTransient<IUserService, UserService>();
-
+builder.Services.AddTransient<IAuthService, AuthService>();
+//Configure the JWT Bearer authentication
+builder.Services.AddAuthentication(o => {
+    o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(jo => {
+        jo.SaveToken = true;
+        jo.RequireHttpsMetadata = false;
+        jo.TokenValidationParameters = new TokenValidationParameters() {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidIssuer = config["Jwt:Issuer"],
+            ValidAudience = config["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:SecretKey"]))
+        };
+    });
 //configure for API versioning in .NET
 builder.Services.AddApiVersioning(options => {
     // ** path : url , query string ,** header ,meida type
@@ -50,6 +71,8 @@ if (app.Environment.IsDevelopment()) {
 }
 
 app.UseHttpsRedirection();
+//Enable authentication and authorization 
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
