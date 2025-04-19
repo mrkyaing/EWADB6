@@ -1,8 +1,7 @@
-using CloudHRMS.Models;
-using CloudHRMS.Models.ViewModels;
+using CloudHRMS.Domain.Models.ViewModels;
+using CloudHRMS.Domain.Services;
 using CloudHRMS.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using System.Security.Claims;
 
 namespace CloudHRMS.Controllers {
@@ -45,11 +44,6 @@ namespace CloudHRMS.Controllers {
 
         public IActionResult Privacy() {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error() {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         public IActionResult AccessDenied() {
             return View();

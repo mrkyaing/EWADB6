@@ -1,4 +1,6 @@
-using CloudHRMS.DAO;
+
+using CloudHRMS.Domain.DAO;
+using CloudHRMS.Domain.Services;
 using CloudHRMS.Services;
 using CloudHRMS.UnitOfWorks;
 using Microsoft.AspNetCore.Identity;

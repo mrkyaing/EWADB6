@@ -1,4 +1,4 @@
-﻿using CloudHRMS.Models.ViewModels;
+﻿using CloudHRMS.Domain.Models.ViewModels;
 using CloudHRMS.Services;
 using Microsoft.AspNetCore.Mvc;
 

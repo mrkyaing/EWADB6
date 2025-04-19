@@ -1,5 +1,5 @@
-﻿using CloudHRMS.Models.DataModels;
-using CloudHRMS.Models.ViewModels;
+﻿using CloudHRMS.Domain.Models.DataModels;
+using CloudHRMS.Domain.Models.ViewModels;
 using CloudHRMS.Repositories.Domain;
 using CloudHRMS.Services;
 using CloudHRMS.UnitOfWorks;

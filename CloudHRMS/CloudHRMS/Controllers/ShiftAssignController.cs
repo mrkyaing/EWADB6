@@ -1,5 +1,6 @@
 ﻿
-using CloudHRMS.Models.ViewModels;
+using CloudHRMS.Domain.Models.ViewModels;
+using CloudHRMS.Domain.Services;
 using CloudHRMS.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;

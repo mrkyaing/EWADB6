@@ -3,8 +3,10 @@ using Asp.Versioning.ApiExplorer;
 using CloudHRMS.Domain.DAO;
 using CloudHRMS.Services;
 using CloudHRMS.UnitOfWorks;
+using CloudHRMS.WebAPIs.ConfigSwaggerOptions;
 using CloudHRMS.WebAPIs.ConfigSwaggerOptions.CloudHRMS.WebAPIs.Configurations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -22,6 +24,7 @@ builder.Services.AddTransient<IEmployeeService, EmployeeService>();
 builder.Services.AddTransient<IDepartmentService, DepartmentService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAuthService, AuthService>();
+builder.Services.AddSingleton<IAuthorizationPolicyProvider, DynamicAuthorizationPolicyProvider>();
 //Configure the JWT Bearer authentication
 builder.Services.AddAuthentication(o => {
     o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

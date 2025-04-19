@@ -29,4 +29,11 @@
     <Folder Include="wwwroot\theme\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CloudHRMS.Domain\CloudHRMS.Domain.csproj" />
+    <ProjectReference Include="..\CloudHRMS.Repositories\CloudHRMS.Repositories.csproj" />
+    <ProjectReference Include="..\CloudHRMS.Services\CloudHRMS.Services.csproj" />
+    <ProjectReference Include="..\CloudHRMS.UnitOfWorks\CloudHRMS.UnitOfWorks.csproj" />
+  </ItemGroup>
+
 </Project>

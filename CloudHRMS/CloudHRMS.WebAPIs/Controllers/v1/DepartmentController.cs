@@ -1,7 +1,7 @@
 ﻿using Asp.Versioning;
 using CloudHRMS.Domain.Models.ViewModels;
 using CloudHRMS.Services;
-using Microsoft.AspNetCore.Authorization;
+using CloudHRMS.WebAPIs.ConfigSwaggerOptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CloudHRMS.WebAPIs.Controllers.v1 {
@@ -24,7 +24,7 @@ namespace CloudHRMS.WebAPIs.Controllers.v1 {
             var departments = _departmentService.GetAll();
             return Ok(departments);
         }
-        [Authorize(Roles = "HR")]
+        [DynamicRoleAuthorize("TopLevelRoles")]
         [MapToApiVersion(1)]
         // POST: api/Department/v1/Create
         [HttpPost]
@@ -35,7 +35,7 @@ namespace CloudHRMS.WebAPIs.Controllers.v1 {
             _departmentService.Create(departmentViewModel);
             return Ok(new { message = "department is created", statusCode = "200" });//200
         }
-        [Authorize(Roles = "HR")]
+        [DynamicRoleAuthorize("TopLevelRoles")]
         [MapToApiVersion(1)]
         // POST: api/Department/v1/delete >> { "Id":"" }
         [HttpDelete]
@@ -46,7 +46,7 @@ namespace CloudHRMS.WebAPIs.Controllers.v1 {
             _departmentService.Delete(departmentViewModelV3.Id);
             return Ok(new { message = "department is deleted", statusCode = "200" });//200
         }
-        [Authorize(Roles = "HR")]
+        [DynamicRoleAuthorize("TopLevelRoles")]
         [MapToApiVersion(2)]
         // POST: api/Department/v2/Create
         [HttpPost]
