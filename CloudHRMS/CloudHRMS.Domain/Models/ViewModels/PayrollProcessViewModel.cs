@@ -4,6 +4,7 @@
         public DateTime ToDate { get; set; }
         public string EmployeeId { get; set; }
         public string DepartmentId { get; set; }
+        //for dropdownload
         public IEnumerable<EmployeeViewModel> Employees { get; set; }
         public IEnumerable<DepartmentViewModel> Departments { get; set; }
     }
